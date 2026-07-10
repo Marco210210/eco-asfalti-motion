@@ -6,7 +6,7 @@
   "description": "Sito Eco Asfalti SRL — versione animation-maxed (Vite + React + Framer Motion)",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prepare-sites-build.cjs",
     "preview": "vite preview"
   },
   "dependencies": {
