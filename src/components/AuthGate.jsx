@@ -13,8 +13,9 @@ export default function AuthGate({ children }) {
 
     if (password === ACCESS_PASSWORD) {
       sessionStorage.setItem(STORAGE_KEY, 'granted')
-      setIsUnlocked(true)
       setError('')
+      setIsUnlocked(true)
+      window.location.reload()
       return
     }
 
