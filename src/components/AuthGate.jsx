@@ -2,9 +2,15 @@ import { useState } from 'react'
 
 const ACCESS_PASSWORD = 'Citarella2026!'
 const STORAGE_KEY = 'citarella-site-access'
+const ACCESS_DURATION = 24 * 60 * 60 * 1000
+
+function hasValidAccess() {
+  const grantedAt = Number(localStorage.getItem(STORAGE_KEY))
+  return Number.isFinite(grantedAt) && Date.now() - grantedAt < ACCESS_DURATION
+}
 
 export default function AuthGate({ children }) {
-  const [isUnlocked, setIsUnlocked] = useState(() => sessionStorage.getItem(STORAGE_KEY) === 'granted')
+  const [isUnlocked, setIsUnlocked] = useState(hasValidAccess)
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
@@ -12,7 +18,7 @@ export default function AuthGate({ children }) {
     event.preventDefault()
 
     if (password === ACCESS_PASSWORD) {
-      sessionStorage.setItem(STORAGE_KEY, 'granted')
+      localStorage.setItem(STORAGE_KEY, String(Date.now()))
       setError('')
       setIsUnlocked(true)
       window.location.reload()
