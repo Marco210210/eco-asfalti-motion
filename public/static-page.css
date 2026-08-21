@@ -1,0 +1,36 @@
+:root {
+  color-scheme: dark;
+  --bg: #0c0c0e;
+  --surface: #17171b;
+  --orange: #ff5c1a;
+  --text: #f4f2ee;
+  --muted: #aaa7a1;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--bg); scroll-behavior: smooth; }
+body { min-height: 100vh; font-family: Inter, system-ui, -apple-system, sans-serif; line-height: 1.7; color: var(--text); background: var(--bg); }
+a { color: inherit; }
+.static-shell { width: min(calc(100% - 2rem), 920px); margin-inline: auto; padding: clamp(2rem, 6vw, 5rem) 0; }
+.static-brand { display: inline-flex; align-items: center; gap: 0.8rem; text-decoration: none; font-size: clamp(1.1rem, 4vw, 1.45rem); font-weight: 900; letter-spacing: 0.04em; }
+.static-brand-mark { display: grid; place-items: center; width: 42px; aspect-ratio: 1; border: 2px solid var(--orange); border-radius: 12px; color: var(--orange); }
+.breadcrumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: clamp(3rem, 8vw, 5rem) 0 1.2rem; color: var(--muted); font-size: 0.86rem; }
+.breadcrumbs a { color: var(--orange); }
+h1 { max-width: 14ch; font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1; letter-spacing: -0.055em; }
+.static-lead { max-width: 65ch; margin-top: 1.5rem; color: var(--muted); font-size: clamp(1rem, 2.4vw, 1.15rem); }
+.static-card { margin-top: clamp(2rem, 6vw, 4rem); padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid var(--border); border-radius: 20px; background: var(--surface); }
+.static-card section + section { margin-top: 2.3rem; padding-top: 2.3rem; border-top: 1px solid var(--border); }
+h2 { margin-bottom: 0.7rem; font-size: clamp(1.3rem, 3vw, 1.75rem); line-height: 1.2; }
+p + p, ul, ol { margin-top: 0.8rem; }
+ul, ol { padding-left: 1.25rem; color: var(--muted); }
+.static-card p { color: var(--muted); }
+.static-card a { color: var(--orange); overflow-wrap: anywhere; }
+.static-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+.static-button { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0.8rem 1.3rem; border: 1px solid var(--orange); border-radius: 999px; background: var(--orange); color: #0c0c0e; font: inherit; font-weight: 800; text-decoration: none; cursor: pointer; }
+.static-button.secondary { background: transparent; color: var(--text); border-color: var(--border); }
+.static-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 520px) {
+  .static-actions, .static-button { width: 100%; }
+}

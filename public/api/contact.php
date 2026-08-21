@@ -17,6 +17,17 @@ function respond(int $status, bool $ok, string $message): void
     exit;
 }
 
+function success_response(string $message): void
+{
+    $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+    if (stripos($accept, 'application/json') === false) {
+        header('Location: ../grazie.html', true, 303);
+        exit;
+    }
+
+    respond(200, true, $message);
+}
+
 function input(string $key): string
 {
     $value = $_POST[$key] ?? '';
@@ -102,7 +113,7 @@ if (!same_origin_request()) {
 // A bot normally fills every field. Return a neutral success response without
 // sending mail, so the protection is not disclosed to the sender.
 if (input('website') !== '') {
-    respond(200, true, 'Richiesta ricevuta.');
+    success_response('Richiesta ricevuta.');
 }
 
 $startedAt = filter_input(INPUT_POST, 'form_started_at', FILTER_VALIDATE_INT);
@@ -114,6 +125,7 @@ $name = input('nome');
 $email = input('email');
 $phone = input('tel');
 $message = input('messaggio');
+$privacyAcceptance = input('privacy_acceptance');
 
 if (text_length($name) < 2 || text_length($name) > 100) {
     respond(422, false, 'Inserisci un nome valido.');
@@ -135,6 +147,10 @@ if (text_length($message) < 10 || text_length($message) > 5000) {
     respond(422, false, 'Il messaggio deve contenere da 10 a 5000 caratteri.');
 }
 
+if ($privacyAcceptance !== '1') {
+    respond(422, false, 'È necessario dichiarare di aver letto la Privacy Policy.');
+}
+
 $clientKey = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 if (rate_limit_exceeded($clientKey)) {
     respond(429, false, 'Hai effettuato troppi tentativi. Riprova tra qualche minuto.');
@@ -150,6 +166,7 @@ $body = implode("\r\n", [
     'Nome e cognome: ' . $name,
     'Email: ' . $email,
     'Telefono: ' . $safePhone,
+    'Informativa privacy presa visione: sì',
     '',
     'Messaggio:',
     $message,
@@ -170,4 +187,4 @@ if (!@mail($recipient, $subject, $body, $headers)) {
     respond(500, false, 'Invio non riuscito. Riprova tra poco o scrivi a info@ecoasfalti.it.');
 }
 
-respond(200, true, 'Richiesta inviata correttamente.');
+success_response('Richiesta inviata correttamente.');

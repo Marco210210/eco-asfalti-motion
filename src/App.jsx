@@ -18,8 +18,11 @@ import CtaBanner from './components/CtaBanner.jsx'
 import Contatti from './components/Contatti.jsx'
 import Footer from './components/Footer.jsx'
 import AuthGate from './components/AuthGate.jsx'
+import MobileStickyCta from './components/MobileStickyCta.jsx'
+import AnalyticsConsent from './components/AnalyticsConsent.jsx'
 
 const MARQUEE_ITEMS = ['Conglomerati bituminosi', 'Recupero R5', 'Materiali ReMade', 'Manutenzione stradale', 'Qualità certificata']
+const ACCESS_GATE_ENABLED = import.meta.env.VITE_ENABLE_ACCESS_GATE === 'true'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
@@ -30,8 +33,8 @@ export default function App() {
     document.body.classList.toggle('preloading', loading)
   }, [loading])
 
-  return (
-    <AuthGate>
+  const content = (
+    <>
       <Cursor />
       <AnimatePresence>
         {loading && <Preloader key="pre" onDone={() => setLoading(false)} />}
@@ -39,6 +42,7 @@ export default function App() {
 
       <motion.div className="scroll-progress" style={{ scaleX }} />
       <Header />
+      <MobileStickyCta />
       <main>
         <Hero />
         <Marquee items={MARQUEE_ITEMS} direction={1} duration={24} className="ink" />
@@ -56,6 +60,9 @@ export default function App() {
         <Contatti />
       </main>
       <Footer />
-    </AuthGate>
+      <AnalyticsConsent />
+    </>
   )
+
+  return ACCESS_GATE_ENABLED ? <AuthGate>{content}</AuthGate> : content
 }

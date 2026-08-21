@@ -6,6 +6,9 @@ export default function Contatti() {
   const [feedback, setFeedback] = useState({ msg: '', ok: true })
   const [submitting, setSubmitting] = useState(false)
   const endpoint = `${import.meta.env.BASE_URL}api/contact.php`
+  const thankYouPage = `${import.meta.env.BASE_URL}grazie.html`
+  const privacyPage = `${import.meta.env.BASE_URL}privacy-policy.html`
+  const directionsUrl = 'https://www.google.com/maps/dir/?api=1&destination=Via%20Alveo%20Santa%20Croce%2046%2C%2084015%20Nocera%20Superiore%20SA'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -35,9 +38,7 @@ export default function Contatti() {
       }
 
       form.reset()
-      const startedAt = form.elements.namedItem('form_started_at')
-      if (startedAt) startedAt.value = String(Math.floor(Date.now() / 1000))
-      setFeedback({ msg: 'Grazie! La richiesta è stata inviata a info@ecoasfalti.it.', ok: true })
+      window.location.assign(thankYouPage)
     } catch (error) {
       setFeedback({
         msg: error instanceof Error ? error.message : 'Non è stato possibile inviare la richiesta. Riprova tra poco.',
@@ -55,7 +56,11 @@ export default function Contatti() {
           <span className="eyebrow">Contatti</span>
           <h2 className="section-title">Parliamone</h2>
           <ul className="contact-list">
-            <li><span className="contact-label">Sede legale &amp; operativa</span><span className="contact-value">Via Alveo Santa Croce 46, 84015 Nocera Superiore (SA)</span></li>
+            <li>
+              <span className="contact-label">Sede legale &amp; operativa</span>
+              <span className="contact-value">Via Alveo Santa Croce 46, 84015 Nocera Superiore (SA)</span>
+              <a className="directions-link" href={directionsUrl} target="_blank" rel="noreferrer">Ottieni indicazioni stradali <span aria-hidden="true">↗</span></a>
+            </li>
             <li><span className="contact-label">Email</span><a className="contact-value" href="mailto:info@ecoasfalti.it">info@ecoasfalti.it</a></li>
             <li><span className="contact-label">C.F. / P. IVA</span><span className="contact-value">06052780654</span></li>
             <li><span className="contact-label">Registro Imprese</span><span className="contact-value">REA SA-493642</span></li>
@@ -94,6 +99,12 @@ export default function Contatti() {
           <div className="field">
             <label htmlFor="messaggio">Descrivi il tuo progetto <span className="req" aria-hidden="true">*</span></label>
             <textarea id="messaggio" name="messaggio" rows="4" minLength="10" maxLength="5000" required></textarea>
+          </div>
+          <div className="privacy-check">
+            <input type="checkbox" id="privacy_acceptance" name="privacy_acceptance" value="1" required />
+            <label htmlFor="privacy_acceptance">
+              Ho letto la <a href={privacyPage} target="_blank" rel="noreferrer">Privacy Policy</a> e richiedo di essere ricontattato. <span className="req" aria-hidden="true">*</span>
+            </label>
           </div>
           <button type="submit" className="btn btn-primary full" disabled={submitting}>
             {submitting ? 'Invio in corso…' : 'Invia richiesta'}

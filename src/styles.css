@@ -314,22 +314,66 @@ h1, h2, h3, h4 { font-family: "Inter", system-ui, sans-serif; font-weight: 800; 
 .remade-card .product-variants { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.2rem; }
 
 /* =========================================================
-   PAVER SCROLL SCENE — road being laid
+   PAVER SCROLL SCENE — cinematic road construction
    ========================================================= */
-.paver { position: relative; background: var(--bg); }
-.paver-sticky { position: sticky; top: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
-.paver-title { font-family: "Syne", sans-serif; font-weight: 800; font-size: clamp(1.8rem, 5vw, 3.4rem); text-align: center; margin-bottom: 2.5rem; letter-spacing: -0.02em; }
+.paver { position: relative; height: 320vh; background: #09090b; overflow: clip; }
+.paver-reduced { height: auto; min-height: 100vh; }
+.paver-sticky { position: sticky; top: 0; z-index: 0; height: 100vh; height: 100dvh; padding: clamp(1.25rem, 3vh, 2.5rem) 0; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; isolation: isolate; }
+.paver-sticky::before { content: ""; position: absolute; z-index: -3; inset: 0; background: radial-gradient(70% 58% at 50% 53%, rgba(255,92,26,0.08), transparent 72%), linear-gradient(180deg, #111116 0%, #09090b 72%); }
+.paver-sticky::after { content: ""; position: absolute; z-index: -2; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 72px 72px; mask-image: linear-gradient(180deg, #000, transparent 82%); }
+.paver-ambient { position: absolute; z-index: -1; left: 50%; top: 51%; width: min(85vw, 1100px); aspect-ratio: 2.5 / 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,92,26,0.32), transparent 68%); filter: blur(48px); pointer-events: none; }
+.paver-heading { position: relative; z-index: 2; width: min(calc(100% - 2.5rem), 1180px); }
+.paver-heading .eyebrow { margin-bottom: 0.55rem; }
+.paver-title { max-width: 13ch; font-family: "Syne", sans-serif; font-weight: 800; font-size: clamp(2.5rem, 5.8vw, 5.6rem); line-height: 0.94; letter-spacing: -0.055em; }
 .paver-title em { color: var(--orange); font-style: normal; }
-.paver-stage { position: relative; width: min(92vw, 900px); height: 190px; }
-.paver-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 70px; border-radius: 12px; background: #1a1a1e; overflow: hidden; }
-.paver-asphalt { position: absolute; inset: 0; transform-origin: 0 50%; background: linear-gradient(#2c2c31, #16161a); background-image: var(--grain); background-size: 150px; }
-.paver-asphalt::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 4px; background: repeating-linear-gradient(90deg, var(--orange) 0 30px, transparent 30px 66px); }
-.paver-roller { position: absolute; bottom: 46px; width: 120px; height: 96px; will-change: transform; }
-.paver-roller svg { width: 100%; height: 100%; }
-.paver-steps { display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center; }
-.paver-step { font-size: 0.85rem; color: var(--text-dim); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: color var(--dur) var(--ease); }
-.paver-step.on { color: var(--orange); }
-.paver-step b { font-family: "Syne", sans-serif; }
+.paver-heading > p { max-width: 62ch; margin-top: 0.75rem; color: var(--text-muted); font-size: clamp(0.88rem, 1.2vw, 1.03rem); line-height: 1.55; }
+
+.paver-stage { position: relative; z-index: 1; width: min(calc(100% - 2.5rem), 1180px); height: clamp(265px, 36vh, 430px); margin-top: clamp(0.5rem, 1.8vh, 1.25rem); }
+.paver-stage::before { content: ""; position: absolute; left: 3%; right: 3%; bottom: 20px; height: 52px; border-radius: 50%; background: rgba(0,0,0,0.72); filter: blur(20px); }
+.paver-horizon { position: absolute; z-index: 0; left: 2%; right: 2%; bottom: 124px; height: 92px; display: flex; align-items: flex-end; gap: 1.2%; opacity: 0.18; overflow: hidden; }
+.paver-horizon::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #15161a 0%, #09090b 100%); mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent); }
+.paver-horizon span { position: relative; z-index: 1; flex: 1; min-width: 46px; height: 54%; border: 1px solid rgba(255,255,255,0.22); border-bottom: 0; background: repeating-linear-gradient(90deg, transparent 0 13px, rgba(255,255,255,0.08) 13px 15px), linear-gradient(#23242a, #101115); }
+.paver-horizon span:nth-child(2), .paver-horizon span:nth-child(6) { height: 84%; }
+.paver-horizon span:nth-child(3) { height: 64%; }
+.paver-horizon span:nth-child(4) { height: 100%; }
+.paver-horizon span:nth-child(5) { height: 72%; }
+
+.paver-road-bed { position: absolute; z-index: 1; left: 0; right: 0; bottom: 22px; height: 112px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px 10px 22px 22px; background: #24252a; box-shadow: inset 0 -22px 35px rgba(0,0,0,0.42), 0 24px 50px rgba(0,0,0,0.58); overflow: hidden; transform: perspective(900px) rotateX(4deg); transform-origin: 50% 100%; }
+.paver-road-aggregate { position: absolute; inset: 0; background-color: #37383e; background-image: var(--grain), radial-gradient(circle at 30% 25%, rgba(255,255,255,0.13) 0 1px, transparent 2px); background-size: 135px, 10px 10px; opacity: 0.78; }
+.paver-fresh-asphalt { position: absolute; inset: 0; transform-origin: 0 50%; background: linear-gradient(180deg, #2a2b30 0%, #111216 52%, #090a0d 100%); box-shadow: inset 0 2px 0 rgba(255,255,255,0.11), inset 0 -12px 22px rgba(0,0,0,0.55); }
+.paver-fresh-asphalt::before { content: ""; position: absolute; inset: 0; background-image: var(--grain); background-size: 120px; opacity: 0.48; mix-blend-mode: screen; }
+.paver-asphalt-sheen { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 8%, rgba(255,255,255,0.08) 18%, transparent 30%, rgba(255,92,26,0.06) 58%, transparent 74%); }
+.paver-road-markings { position: absolute; z-index: 2; left: 5%; right: 5%; top: 49%; height: 7px; display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(18px, 5vw, 62px); transform-origin: 0 50%; }
+.paver-road-markings span { border-radius: 99px; background: linear-gradient(180deg, #fffdf5, #d8d5ca); box-shadow: 0 0 9px rgba(255,255,255,0.2); }
+.paver-road-edge { position: absolute; z-index: 2; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25) 8%, rgba(255,255,255,0.25) 92%, transparent); }
+.paver-road-edge-top { top: 8px; }
+.paver-road-edge-bottom { bottom: 8px; opacity: 0.42; }
+
+.paver-machine { position: absolute; z-index: 3; left: 0; bottom: 101px; width: clamp(315px, 43vw, 525px); will-change: transform; }
+.paver-machine-svg { width: 100%; height: auto; overflow: visible; }
+.paver-track-treads { animation: paverTracks 520ms linear infinite; }
+.paver-track-treads-rear { animation-duration: 460ms; }
+.paver-beacon-glow { animation: paverBeacon 900ms ease-in-out infinite alternate; }
+.paver-heat { position: absolute; left: 2%; bottom: 2%; width: 24%; height: 68%; pointer-events: none; }
+.paver-heat i { position: absolute; bottom: 0; width: 24px; height: 72px; border: 2px solid rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.2) transparent transparent; border-radius: 50%; filter: blur(1px); animation: paverSteam 2.4s ease-out infinite; }
+.paver-heat i:nth-child(1) { left: 5%; animation-delay: -0.2s; }
+.paver-heat i:nth-child(2) { left: 24%; animation-delay: -1.25s; transform: scale(0.75); }
+.paver-heat i:nth-child(3) { left: 43%; animation-delay: -0.65s; }
+.paver-heat i:nth-child(4) { left: 62%; animation-delay: -1.7s; transform: scale(0.65); }
+.paver-heat i:nth-child(5) { left: 81%; animation-delay: -0.95s; }
+@keyframes paverTracks { to { transform: translateX(-17px); } }
+@keyframes paverBeacon { to { opacity: 0.95; transform: scale(1.12); } }
+@keyframes paverSteam { 0% { opacity: 0; translate: 0 8px; scale: 0.7; } 28% { opacity: 0.75; } 100% { opacity: 0; translate: 8px -90px; scale: 1.35; } }
+
+.paver-process { position: relative; z-index: 2; width: min(calc(100% - 2.5rem), 1180px); margin-top: clamp(0.55rem, 1.5vh, 1.1rem); }
+.paver-process-line { height: 2px; background: var(--border); overflow: hidden; }
+.paver-process-line span { display: block; width: 100%; height: 100%; transform-origin: 0 50%; background: linear-gradient(90deg, var(--orange), #ffad82); box-shadow: 0 0 12px var(--orange-glow); }
+.paver-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(0.7rem, 2vw, 1.8rem); margin-top: 0.85rem; }
+.paver-step { min-width: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.7rem; align-items: start; color: var(--text-dim); opacity: 0.42; transition: color var(--dur) var(--ease), opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+.paver-step.on { color: var(--text); opacity: 1; transform: translateY(-2px); }
+.paver-step b { color: var(--orange); font-family: "Syne", sans-serif; font-size: 0.76rem; letter-spacing: 0.08em; }
+.paver-step strong { display: block; font-size: 0.86rem; line-height: 1.25; }
+.paver-step small { display: block; margin-top: 0.25rem; color: var(--text-dim); font-size: 0.7rem; line-height: 1.4; }
 
 /* =========================================================
    SERVICES — sticky stacking cards
@@ -446,6 +490,8 @@ h1, h2, h3, h4 { font-family: "Inter", system-ui, sans-serif; font-weight: 800; 
 .contact-label { display: block; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.25rem; }
 .contact-value { color: var(--text); font-size: 1.12rem; font-weight: 500; }
 a.contact-value:hover { color: var(--orange); }
+.directions-link { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem; color: var(--text-muted); font-size: 0.88rem; font-weight: 700; }
+.directions-link:hover { color: var(--orange); }
 .contact-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(1.8rem, 3vw, 2.6rem); }
 .field { margin-bottom: 1.2rem; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -455,6 +501,10 @@ a.contact-value:hover { color: var(--orange); }
 .field input:focus, .field textarea:focus { outline: none; border-color: var(--orange); }
 .field textarea { resize: vertical; }
 .field input:user-invalid, .field textarea:user-invalid { border-color: #f87171; }
+.privacy-check { display: grid; grid-template-columns: auto 1fr; gap: 0.7rem; align-items: start; margin: 0.25rem 0 1.2rem; color: var(--text-muted); font-size: 0.84rem; line-height: 1.5; }
+.privacy-check input { width: 18px; height: 18px; margin-top: 0.15rem; accent-color: var(--orange); }
+.privacy-check a { color: var(--text); text-decoration: underline; text-underline-offset: 0.2em; }
+.privacy-check a:hover { color: var(--orange); }
 .form-trap { position: absolute !important; left: -10000px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
 .form-feedback { margin-top: 1rem; font-weight: 600; min-height: 1.2em; }
 
@@ -473,6 +523,19 @@ a.contact-value:hover { color: var(--orange); }
 .footer-nav a { font-weight: 500; color: var(--text-muted); transition: color var(--dur) var(--ease); }
 .footer-nav a:hover { color: var(--orange); }
 .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem; padding-bottom: 1.6rem; font-size: 0.86rem; color: var(--text-dim); }
+.footer-bottom a:hover, .footer-privacy-button:hover { color: var(--orange); }
+.footer-privacy-button { padding: 0; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+
+/* ---------- Mobile CTA + consent ---------- */
+.mobile-sticky-cta { display: none; }
+.analytics-consent { position: fixed; z-index: 500; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); width: min(calc(100% - 2rem), 820px); transform: translateX(-50%); padding: 1.15rem; border: 1px solid var(--border-2); border-radius: 18px; background: rgba(23,23,27,0.98); box-shadow: 0 20px 70px rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
+.analytics-consent strong { display: block; margin-bottom: 0.25rem; }
+.analytics-consent p { max-width: 58ch; color: var(--text-muted); font-size: 0.86rem; line-height: 1.5; }
+.analytics-consent a { color: var(--orange); font-size: 0.8rem; font-weight: 700; }
+.analytics-consent-actions { display: flex; flex: 0 0 auto; gap: 0.6rem; }
+.analytics-consent button { min-height: 44px; padding: 0.7rem 1rem; border: 1px solid var(--border-2); border-radius: 999px; font: inherit; font-size: 0.85rem; font-weight: 800; cursor: pointer; }
+.consent-reject { color: var(--text); background: transparent; }
+.consent-accept { border-color: var(--orange) !important; color: #0c0c0e; background: var(--orange); }
 
 /* =========================================================
    RESPONSIVE
@@ -561,6 +624,21 @@ a.contact-value:hover { color: var(--orange); }
 }
 
 @media (max-width: 900px) {
+  .mobile-sticky-cta { position: fixed; z-index: 115; left: 1rem; right: 1rem; bottom: max(0.75rem, env(safe-area-inset-bottom)); min-height: 52px; padding: 0.8rem 1.2rem; border: 1px solid var(--orange); border-radius: 999px; background: var(--orange); color: #0c0c0e; box-shadow: 0 10px 35px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 0.6rem; font-weight: 900; transition: opacity 180ms ease, transform 180ms ease; }
+  .mobile-sticky-cta.is-hidden { opacity: 0; transform: translateY(calc(100% + 1.5rem)); pointer-events: none; }
+  .site-footer { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+  .analytics-consent { bottom: max(0.75rem, env(safe-area-inset-bottom)); align-items: stretch; flex-direction: column; }
+  .analytics-consent-actions { width: 100%; }
+  .analytics-consent-actions button { flex: 1 1 0; }
+  .paver { height: 280vh; }
+  .paver-heading, .paver-stage, .paver-process { width: calc(100% - 2rem); }
+  .paver-title { font-size: clamp(2.4rem, 9vw, 4.4rem); }
+  .paver-machine { width: clamp(290px, 48vw, 420px); }
+  .marquee-band.skew {
+    width: calc(100% + 2rem);
+    margin: 2.5rem -1rem;
+    transform: rotate(-2deg) scale(1.01);
+  }
   .grid-2, .contatti-grid, .company-profile-grid { grid-template-columns: 1fr; }
   .company-copy .section-title, .contatti-info .section-title { font-size: clamp(2.35rem, 8.2vw, 4.8rem); }
   .company-photo-wrap { min-height: min(72vw, 520px); }
@@ -627,10 +705,21 @@ a.contact-value:hover { color: var(--orange); }
   .h-card-body h3 { font-size: 1.32rem; overflow-wrap: anywhere; }
   .stack-card { position: relative !important; top: auto !important; min-height: 0; }
   .stack-card h3 { font-size: 1.45rem; overflow-wrap: anywhere; }
-  .paver-stage { width: calc(100% - 2rem); height: 165px; }
-  .paver-roller { width: 20%; height: auto; aspect-ratio: 5 / 4; bottom: 48px; }
-  .paver-steps { gap: 0.7rem 1rem; padding-inline: 1rem; }
-  .paver-step { font-size: 0.76rem; }
+  .paver { height: 260vh; }
+  .paver-sticky { padding: calc(72px + 0.5rem) 0 calc(64px + env(safe-area-inset-bottom)); }
+  .paver-heading .eyebrow { margin-bottom: 0.35rem; font-size: 0.62rem; }
+  .paver-title { max-width: 11ch; font-size: clamp(2.15rem, 11vw, 3.15rem); line-height: 0.96; }
+  .paver-heading > p { max-width: 42ch; margin-top: 0.55rem; font-size: 0.77rem; line-height: 1.4; }
+  .paver-stage { height: 270px; margin-top: 0.35rem; }
+  .paver-horizon { bottom: 108px; height: 70px; }
+  .paver-road-bed { bottom: 18px; height: 94px; }
+  .paver-machine { bottom: 83px; width: min(68vw, 310px); }
+  .paver-road-markings { height: 5px; gap: 18px; }
+  .paver-process { margin-top: 0.35rem; }
+  .paver-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem 0.9rem; margin-top: 0.65rem; }
+  .paver-step { gap: 0.45rem; }
+  .paver-step strong { font-size: 0.76rem; }
+  .paver-step small { display: none; }
   .cta-inner { padding-inline: 1rem; }
   .cta-inner h2 { font-size: clamp(2rem, 9vw, 2.4rem); line-height: 1.18; overflow-wrap: anywhere; }
   .contact-form { width: 100%; padding: 1.35rem; }

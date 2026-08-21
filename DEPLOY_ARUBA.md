@@ -12,13 +12,31 @@ Non dipende da servizi esterni e invia tutte le richieste a
 
 ## Pubblicazione
 
-1. Eseguire `npm run build`.
-2. Caricare **il contenuto** della cartella `dist` nella root pubblica del
-   dominio Aruba, mantenendo la cartella `api` e il file `api/contact.php`.
-3. Nel pannello Aruba aprire la gestione PHP ed eseguire il test della funzione
+1. Creare un file locale `.env.production.local` (non va pubblicato su Git) con:
+
+   ```env
+   VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+   VITE_ENABLE_ACCESS_GATE=false
+   ```
+
+   Se Google Analytics non deve ancora essere attivato, lasciare vuoto
+   `VITE_GA_MEASUREMENT_ID`. In questo caso non vengono caricati script Google e
+   il banner Analytics non viene mostrato.
+2. Verificare che il dominio definitivo sia `https://www.ecoasfaltisrl.it/`.
+   Se cambia, aggiornare canonical e Open Graph in `index.html`, oltre a
+   `public/robots.txt` e `public/sitemap.xml`.
+3. Eseguire `npm run build`.
+4. Caricare **il contenuto** della cartella `dist` nella root pubblica del
+   dominio Aruba, mantenendo la cartella `api`, il file `api/contact.php` e il
+   file nascosto `.htaccess`.
+5. Nel pannello Aruba aprire la gestione PHP ed eseguire il test della funzione
    `mail()` verso `info@ecoasfalti.it`.
-4. Aprire il sito pubblicato e inviare una richiesta reale dal form.
-5. Controllare sia la posta in arrivo sia la cartella spam della casella.
+6. Aprire il sito pubblicato e inviare una richiesta reale dal form.
+7. Controllare sia la posta in arrivo sia la cartella spam della casella.
+8. Verificare `/404.html`, `/privacy-policy.html`, `/robots.txt` e
+   `/sitemap.xml` sul dominio pubblico.
+9. Prima del lancio, far verificare la Privacy Policy al titolare o al consulente
+   privacy in base ai fornitori effettivamente usati da hosting e posta.
 
 Il mittente tecnico è `info@ecoasfalti.it`; l'indirizzo inserito nel form viene
 impostato come `Reply-To`, quindi rispondendo al messaggio si risponde
