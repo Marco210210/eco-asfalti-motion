@@ -2,6 +2,8 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import Magnetic from './Magnetic.jsx'
 
+const HERO_IMAGE = `${import.meta.env.BASE_URL}images/impianto-06.webp`
+
 const ease = [0.16, 1, 0.3, 1]
 
 /* Each headline line sits in an overflow-hidden mask and slides up into view. */
@@ -33,7 +35,7 @@ export default function Hero() {
   return (
     <section className="hero" id="hero" ref={ref}>
       <div className="hero-bg" aria-hidden="true">
-        <img src="/images/impianto-06.webp" alt="" width="2200" height="1238" fetchPriority="high" />
+        <img src={HERO_IMAGE} alt="" width="2200" height="1238" fetchPriority="high" />
         <div className="hero-grid" />
       </div>
       <motion.div className="hero-glow" aria-hidden="true" style={reduce ? undefined : { y: glowY }} />

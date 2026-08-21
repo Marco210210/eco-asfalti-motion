@@ -1,12 +1,14 @@
 import Reveal from './Reveal.jsx'
 
+const IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
+
 const PHOTOS = [
-  { src: '/images/impianto-01.webp', alt: "Vista zenitale dell'impianto e delle aree di stoccaggio", label: 'Impianto e stoccaggi' },
-  { src: '/images/impianto-02.webp', alt: "Vista aerea dell'impianto con mezzi in ingresso e in uscita", label: 'Flussi operativi' },
-  { src: '/images/impianto-03.webp', alt: 'Vista ravvicinata dei silos e delle tramogge degli aggregati', label: 'Aggregati e dosaggio' },
-  { src: '/images/impianto-04.webp', alt: "Vista aerea dell'area produttiva Eco Asfalti", label: 'Area produttiva' },
-  { src: '/images/impianto-05.webp', alt: 'Impianto Eco Asfalti visto dal lato dei capannoni', label: 'Ciclo di produzione' },
-  { src: '/images/impianto-06.webp', alt: "Impianto Eco Asfalti nel contesto urbano di Nocera Superiore", label: 'Territorio e infrastrutture' },
+  { src: `${IMAGE_BASE}impianto-01.webp`, alt: "Vista zenitale dell'impianto e delle aree di stoccaggio", label: 'Impianto e stoccaggi' },
+  { src: `${IMAGE_BASE}impianto-02.webp`, alt: "Vista aerea dell'impianto con mezzi in ingresso e in uscita", label: 'Flussi operativi' },
+  { src: `${IMAGE_BASE}impianto-03.webp`, alt: 'Vista ravvicinata dei silos e delle tramogge degli aggregati', label: 'Aggregati e dosaggio' },
+  { src: `${IMAGE_BASE}impianto-04.webp`, alt: "Vista aerea dell'area produttiva Eco Asfalti", label: 'Area produttiva' },
+  { src: `${IMAGE_BASE}impianto-05.webp`, alt: 'Impianto Eco Asfalti visto dal lato dei capannoni', label: 'Ciclo di produzione' },
+  { src: `${IMAGE_BASE}impianto-06.webp`, alt: "Impianto Eco Asfalti nel contesto urbano di Nocera Superiore", label: 'Territorio e infrastrutture' },
 ]
 
 export default function ImpiantoGallery() {

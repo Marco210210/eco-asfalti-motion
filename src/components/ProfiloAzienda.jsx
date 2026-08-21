@@ -1,5 +1,7 @@
 import Reveal from './Reveal.jsx'
 
+const PROFILE_IMAGE = `${import.meta.env.BASE_URL}images/impianto-03.webp`
+
 const COMPANY_FACTS = [
   { label: 'Sede legale e operativa', value: 'Via Alveo Santa Croce 46, 84015 Nocera Superiore (SA)' },
   { label: 'Codice fiscale e P. IVA', value: '06052780654' },
@@ -14,7 +16,7 @@ export default function ProfiloAzienda() {
         <Reveal className="company-photo-wrap">
           <img
             className="company-photo"
-            src="/images/impianto-03.webp"
+            src={PROFILE_IMAGE}
             alt="Vista aerea dell'impianto Eco Asfalti a Nocera Superiore"
             width="2200"
             height="1238"
