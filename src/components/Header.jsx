@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 const NAV_LINKS = [
+  { href: '#azienda', label: 'Azienda' },
   { href: '#materiali', label: 'Materiali' },
-  { href: '#come-nasce', label: 'La strada' },
   { href: '#servizi', label: 'Servizi' },
   { href: '#certificazioni', label: 'Certificazioni' },
-  { href: '#faq', label: 'FAQ' },
 ]
 
 export default function Header() {
@@ -18,8 +17,14 @@ export default function Header() {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY
-      setSolid(y > 40)
-      setHidden(y > 300 && y > lastY.current && !menuOpen)
+      const keepVisible = window.matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches
+      if (keepVisible) {
+        setSolid(false)
+        setHidden(false)
+      } else {
+        setSolid(y > 40)
+        setHidden(y > 300 && y > lastY.current && !menuOpen)
+      }
       lastY.current = y
     }
     window.addEventListener('scroll', onScroll, { passive: true })

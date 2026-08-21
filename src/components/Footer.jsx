@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 
 const FOOTER_LINKS = [
+  { href: '#azienda', label: 'Azienda' },
   { href: '#materiali', label: 'Materiali' },
   { href: '#servizi', label: 'Servizi' },
   { href: '#certificazioni', label: 'Certificazioni' },
@@ -33,7 +34,7 @@ export default function Footer() {
         </nav>
       </div>
       <div className="container footer-bottom">
-        <span>&copy; {year} Eco Asfalti SRL &middot; P.IVA 00000000000</span>
+        <span>&copy; {year} Eco Asfalti SRL &middot; P. IVA 06052780654 &middot; REA SA-493642</span>
         <span>Tutti i diritti riservati</span>
       </div>
     </footer>

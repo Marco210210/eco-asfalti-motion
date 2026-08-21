@@ -24,18 +24,23 @@ export default function Hero() {
   const ref = useRef(null)
   const reduce = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], [0, 160])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  // Keep the content moving, but always inside the hero: the previous positive
+  // parallax pushed the CTAs down behind the decorative road while scrolling.
+  const y = useTransform(scrollYProgress, [0, 0.7, 1], [0, -48, -72])
+  const opacity = useTransform(scrollYProgress, [0, 0.72, 0.94], [1, 0.72, 0])
   const glowY = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   return (
     <section className="hero" id="hero" ref={ref}>
-      <div className="hero-bg" aria-hidden="true"><div className="hero-grid" /></div>
+      <div className="hero-bg" aria-hidden="true">
+        <img src="/images/impianto-06.webp" alt="" width="2200" height="1238" fetchPriority="high" />
+        <div className="hero-grid" />
+      </div>
       <motion.div className="hero-glow" aria-hidden="true" style={reduce ? undefined : { y: glowY }} />
 
       <motion.div className="container hero-inner" style={reduce ? undefined : { y, opacity }}>
         <motion.p className="hero-eyebrow eyebrow" initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}>
-          Eco Asfalti SRL &middot; dal 1998
+          Nocera Superiore &middot; Produzione &middot; Recupero &middot; Manutenzione
         </motion.p>
 
         <h1 className="hero-title" aria-label="Costruiamo strade che durano">
@@ -45,12 +50,12 @@ export default function Hero() {
         </h1>
 
         <motion.p className="hero-lead" initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease, delay: 0.8 }}>
-          Conglomerati bituminosi e pavimentazioni stradali. Tecnologia, qualità
-          certificata e materiali riciclati — dall'impianto alla stesa finale.
+          Conglomerati bituminosi, recupero autorizzato del fresato, mezzi meccanici
+          e manutenzione stradale — con un sistema di gestione certificato.
         </motion.p>
 
         <motion.div className="hero-actions" initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease, delay: 0.9 }}>
-          <Magnetic><a href="#materiali" className="btn btn-primary">Esplora i materiali</a></Magnetic>
+          <Magnetic><a href="#azienda" className="btn btn-primary">Scopri Eco Asfalti</a></Magnetic>
           <Magnetic><a href="#contatti" className="btn btn-ghost">Richiedi un preventivo</a></Magnetic>
         </motion.div>
       </motion.div>

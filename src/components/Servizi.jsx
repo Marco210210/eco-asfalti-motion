@@ -1,10 +1,11 @@
 import Reveal from './Reveal.jsx'
 
 const SERVICES = [
-  { num: '01', title: 'Impianto di produzione', desc: 'Produzione interna di conglomerati a caldo e riciclati, con controllo qualità costante e forniture puntuali in cantiere.' },
-  { num: '02', title: 'Stesa e pavimentazione', desc: "Squadre e mezzi dedicati per la posa di strade, piazzali, parcheggi e piste ciclabili di ogni dimensione." },
-  { num: '03', title: 'Manutenzione stradale', desc: 'Fresatura, risanamento di buche e rifacimento del manto per il ripristino della sicurezza stradale.' },
-  { num: '04', title: 'Consulenza tecnica', desc: 'Scelta del materiale, computi metrici e sopralluoghi per soluzioni su misura del tuo progetto.' },
+  { num: '01', title: 'Produzione di conglomerati', desc: 'Produzione interna di conglomerato bituminoso, incluse miscele ReMade con contenuto riciclato certificato fino al 45%.' },
+  { num: '02', title: 'Recupero del fresato', desc: "Recupero R5 del conglomerato bituminoso EER 17 03 02 e reimpiego del materiale nel ciclo produttivo, nel rispetto dell'AUA vigente." },
+  { num: '03', title: 'Stesa e manutenzione', desc: 'Fresatura, ripristino e manutenzione di strade, piazzali e pavimentazioni con squadre e mezzi dedicati.' },
+  { num: '04', title: 'Noleggio mezzi meccanici', desc: 'Noleggio di mezzi meccanici per lavorazioni stradali e attività di cantiere.' },
+  { num: '05', title: 'Supporto tecnico', desc: 'Analisi delle esigenze, scelta della miscela e sopralluoghi per definire la soluzione più adatta al progetto.' },
 ]
 
 export default function Servizi() {

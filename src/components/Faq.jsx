@@ -4,12 +4,14 @@ import Reveal from './Reveal.jsx'
 
 /* Keep in sync with the FAQPage JSON-LD in index.html. */
 const FAQS = [
-  { q: 'Che tipo di conglomerati bituminosi producete?', a: "Produciamo l'intera gamma per ogni strato della pavimentazione: conglomerato di base, binder di collegamento, strato d'usura, usura drenante fonoassorbente, usura drenante colorata e conglomerato riciclato (RAP)." },
+  { q: 'Che tipo di conglomerati bituminosi producete?', a: "Produciamo conglomerati di base, binder di collegamento, usura con bitume tal quale o modificato, usura SMA con bitume modificato, usura drenante e materiali CAM." },
   { q: 'Oltre alla fornitura del materiale, realizzate anche la posa?', a: "Sì. Seguiamo il cantiere dall'inizio alla fine: produzione del conglomerato nel nostro impianto, trasporto e stesa con squadre e mezzi specializzati per strade, piazzali, parcheggi e piste ciclabili." },
-  { q: 'Utilizzate materiali riciclati?', a: "Sì. Recuperiamo e riutilizziamo il fresato d'asfalto (RAP) nei nostri conglomerati, riducendo l'estrazione di nuove materie prime e l'impatto ambientale, mantenendo le stesse prestazioni." },
-  { q: 'Quali certificazioni possiede Eco Asfalti SRL?', a: 'Operiamo con sistema di gestione certificato ISO 9001 (qualità), ISO 14001 (ambiente) e ISO 45001 (sicurezza sul lavoro). I nostri conglomerati sono a marcatura CE secondo la norma EN 13108.' },
-  { q: 'In quali zone operate?', a: 'Operiamo con il nostro impianto e le nostre squadre sul territorio regionale e nelle aree limitrofe. Per verificare la copertura del tuo cantiere contattaci: valutiamo ogni richiesta con un sopralluogo dedicato.' },
-  { q: 'Come posso richiedere un preventivo?', a: 'Puoi compilare il modulo nella sezione Contatti oppure chiamarci: il nostro ufficio tecnico ti ricontatta per un sopralluogo e un preventivo su misura, senza impegno.' },
+  { q: 'Quanto materiale riciclato contengono i prodotti ReMade?', a: 'Le otto miscele certificate ReMade contengono dal 16% al 45% di materiale riciclato. Le percentuali sono dichiarate per ciascun prodotto nel certificato 1591/001.' },
+  { q: 'Qual è la capacità autorizzata per il recupero del fresato?', a: "L'AUA n. 137/2026 autorizza il recupero R5 di conglomerato bituminoso EER 17 03 02 fino a un quantitativo massimo di 97.860 tonnellate all'anno." },
+  { q: 'Quali certificazioni possiede Eco Asfalti?', a: 'Il sistema comprende ISO 9001, ISO 14001, ISO 45001, UNI ISO 37001, ISO 39001, ISO 50001, PAS 24000, UNI/PdR 125, ESG-LABEX e ReMade. L’impresa possiede inoltre attestazione SOA OG 3, classifica II.' },
+  { q: 'Eco Asfalti adotta un Modello 231?', a: 'Sì. L’azienda ha adottato un Modello di Organizzazione, Gestione e Controllo ai sensi del D.Lgs. 231/2001, con Codice Etico, Organismo di Vigilanza e disciplina delle segnalazioni whistleblowing.' },
+  { q: "Dove si trova l'impianto?", a: "La sede legale e operativa è in Via Alveo Santa Croce 46, 84015 Nocera Superiore, in provincia di Salerno." },
+  { q: 'Come posso richiedere informazioni o un preventivo?', a: 'Puoi compilare il modulo nella sezione Contatti oppure scrivere a info@ecoasfalti.it. Il team valuterà la richiesta e le esigenze del cantiere.' },
 ]
 
 export default function Faq() {

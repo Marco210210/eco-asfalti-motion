@@ -6,19 +6,20 @@ import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Marquee from './components/Marquee.jsx'
 import Manifesto from './components/Manifesto.jsx'
+import ProfiloAzienda from './components/ProfiloAzienda.jsx'
 import Stats from './components/Stats.jsx'
+import ImpiantoGallery from './components/ImpiantoGallery.jsx'
 import MaterialiScroll from './components/MaterialiScroll.jsx'
 import Paver from './components/Paver.jsx'
 import Servizi from './components/Servizi.jsx'
 import Certificazioni from './components/Certificazioni.jsx'
-import Realizzazioni from './components/Realizzazioni.jsx'
 import Faq from './components/Faq.jsx'
 import CtaBanner from './components/CtaBanner.jsx'
 import Contatti from './components/Contatti.jsx'
 import Footer from './components/Footer.jsx'
 import AuthGate from './components/AuthGate.jsx'
 
-const MARQUEE_ITEMS = ['Conglomerati bituminosi', 'Pavimentazioni', 'Materiali riciclati', 'Certificazione ISO', 'Manutenzione']
+const MARQUEE_ITEMS = ['Conglomerati bituminosi', 'Recupero R5', 'Materiali ReMade', 'Manutenzione stradale', 'Qualità certificata']
 
 export default function App() {
   const [loading, setLoading] = useState(true)
@@ -42,13 +43,14 @@ export default function App() {
         <Hero />
         <Marquee items={MARQUEE_ITEMS} direction={1} duration={24} className="ink" />
         <Manifesto />
+        <ProfiloAzienda />
         <Stats />
+        <ImpiantoGallery />
         <Marquee items={MARQUEE_ITEMS} direction={-1} duration={30} className="outline skew" />
         <MaterialiScroll />
         <Paver />
         <Servizi />
         <Certificazioni />
-        <Realizzazioni />
         <Faq />
         <CtaBanner />
         <Contatti />

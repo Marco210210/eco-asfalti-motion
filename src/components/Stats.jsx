@@ -1,64 +1,73 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import Reveal from './Reveal.jsx'
 
-const STATS = [
-  { to: 25, unit: '+', label: 'Anni di attività', pct: 0.7 },
-  { to: 1200, unit: '+', label: 'Cantieri completati', pct: 0.9 },
-  { to: 98, unit: '%', label: 'Fresato recuperato', pct: 0.98 },
-  { to: 4, unit: '', label: 'Certificazioni ISO', pct: 0.5 },
+const FACILITIES = [
+  {
+    label: 'Autorizzazione ambientale',
+    code: '137/26',
+    title: 'AUA integrata',
+    desc: "L'AUA n. 137 del 30 giugno 2026 comprende scarichi, emissioni in atmosfera, impatto acustico e recupero dei rifiuti.",
+  },
+  {
+    label: 'Recupero R5 · EER 17 03 02',
+    code: '97.860',
+    unit: 't/anno',
+    title: 'Capacità autorizzata',
+    desc: "Quantitativo massimo annuo autorizzato per il recupero di conglomerato bituminoso in procedura semplificata.",
+  },
+  {
+    label: 'Contenuto riciclato certificato',
+    code: '45%',
+    title: 'Prodotti ReMade',
+    desc: 'Le miscele certificate raggiungono fino al 45% di materiale riciclato, con percentuali dichiarate per ciascun prodotto.',
+  },
+  {
+    label: 'Sostenibilità ESG-LABEX',
+    code: '13',
+    unit: 'SDGs',
+    title: 'Rating AAA/AAA−',
+    desc: 'Score ESG pari a 80 e tredici Obiettivi di Sviluppo Sostenibile raggiunti secondo la certificazione ESG-LABEX.',
+  },
 ]
 
-function StatCard({ stat, delay }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.5 })
-  const [val, setVal] = useState(0)
-
-  useEffect(() => {
-    if (!inView) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setVal(stat.to); return }
-    const dur = 1600, start = performance.now()
-    let raf
-    const step = (now) => {
-      const p = Math.min((now - start) / dur, 1)
-      setVal(Math.floor((1 - Math.pow(1 - p, 3)) * stat.to))
-      if (p < 1) raf = requestAnimationFrame(step); else setVal(stat.to)
-    }
-    raf = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(raf)
-  }, [inView, stat.to])
-
+function FacilityCard({ facility, delay }) {
   return (
-    <Reveal className="stat" delay={delay} ref={ref}>
-      <div className="stat-num">
-        {val.toLocaleString('it-IT')}<span className="u">{stat.unit}</span>
+    <Reveal className="facility-card" delay={delay}>
+      <div className="facility-card-top">
+        <span className="facility-label">{facility.label}</span>
+        <span className="facility-dot" aria-hidden="true" />
       </div>
-      <span className="stat-label">{stat.label}</span>
-      <div className="stat-bar">
-        <motion.span
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: stat.pct }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: delay + 0.2 }}
-        />
+      <div className="facility-code">{facility.code}{facility.unit && <small>{facility.unit}</small>}</div>
+      <div className="facility-copy">
+        <h3>{facility.title}</h3>
+        <p>{facility.desc}</p>
       </div>
     </Reveal>
   )
 }
 
 export default function Stats() {
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const orbY = useTransform(scrollYProgress, [0, 1], [-80, 100])
+
   return (
-    <section className="section" id="azienda">
+    <section className="section facility-section" id="autorizzazioni" ref={ref}>
+      <motion.div className="facility-orb" aria-hidden="true" style={reduce ? undefined : { y: orbY }} />
       <div className="container">
         <Reveal className="section-head">
-          <span className="eyebrow">Numeri</span>
-          <h2 className="section-title">Fatti, <span className="out">non</span> promesse</h2>
+          <span className="eyebrow">Dati documentati</span>
+          <h2 className="section-title">Autorizzati. <span className="out">Misurabili.</span></h2>
+          <p className="section-intro">Numeri e titoli ricavati dalle autorizzazioni e dalle certificazioni aziendali aggiornate al 2026.</p>
         </Reveal>
-        <div className="stats-grid">
-          {STATS.map((s, i) => (
-            <StatCard key={s.label} stat={s} delay={i * 0.08} />
+        <div className="facility-grid">
+          {FACILITIES.map((facility, i) => (
+            <FacilityCard key={facility.title} facility={facility} delay={i * 0.12} />
           ))}
         </div>
+        <p className="data-note">Le validità dei titoli restano soggette alle prescrizioni e alle sorveglianze previste dagli enti competenti.</p>
       </div>
     </section>
   )

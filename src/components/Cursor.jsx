@@ -13,7 +13,8 @@ export default function Cursor() {
   const ringY = useSpring(y, { stiffness: 350, damping: 28, mass: 0.6 })
 
   useEffect(() => {
-    const fine = window.matchMedia('(pointer: fine)').matches
+    const desktopPointer = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1025px)')
+    const fine = desktopPointer.matches
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!fine || reduce) return
 
