@@ -30,6 +30,13 @@ export default function Preloader({ onDone }) {
       transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.25 }}
       onAnimationComplete={() => count >= 100 && onDone()}
     >
+      <img
+        className="preloader-logo"
+        src={`${import.meta.env.BASE_URL}images/eco-asfalti-logo.png`}
+        width="668"
+        height="589"
+        alt=""
+      />
       <div className="preloader-count">
         {count}<span className="pc-accent">%</span>
       </div>

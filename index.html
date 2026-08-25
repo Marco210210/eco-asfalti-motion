@@ -7,7 +7,25 @@
   <meta name="description" content="Eco Asfalti SRL a Nocera Superiore: produzione di conglomerati bituminosi, recupero autorizzato del fresato, manutenzione stradale e sistemi di gestione certificati." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#0c0c0e" />
+  <script>
+    (function () {
+      var savedTheme;
+      try { savedTheme = localStorage.getItem('ecoasfalti-theme'); } catch (_) { savedTheme = null; }
+      var theme = savedTheme === 'light' || savedTheme === 'dark'
+        ? savedTheme
+        : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f4faf7' : '#0c0c0e');
+    }());
+  </script>
+  <meta name="application-name" content="Eco Asfalti SRL" />
   <link rel="canonical" href="https://www.ecoasfaltisrl.it/" />
+  <link rel="icon" href="./favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+  <link rel="manifest" href="./site.webmanifest" />
 
   <meta property="og:locale" content="it_IT" />
   <meta property="og:type" content="website" />
@@ -24,7 +42,6 @@
   <meta name="twitter:title" content="Eco Asfalti SRL — Costruiamo strade che durano" />
   <meta name="twitter:description" content="Conglomerati bituminosi, recupero autorizzato del fresato e manutenzione stradale." />
   <meta name="twitter:image" content="https://www.ecoasfaltisrl.it/images/impianto-06.webp" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171b'/%3E%3Cpath d='M14 49 32 15l18 34' fill='none' stroke='%23ff5c1a' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 
   <!-- Google Fonts: Syne (display) + Inter (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,6 +75,7 @@
     "legalName": "Eco Asfalti S.r.l.",
     "description": "Produzione di conglomerati bituminosi, recupero autorizzato del fresato, nolo di mezzi meccanici e manutenzione stradale.",
     "url": "https://www.ecoasfaltisrl.it/",
+    "logo": "https://www.ecoasfaltisrl.it/images/eco-asfalti-logo.png",
     "image": "https://www.ecoasfaltisrl.it/images/impianto-06.webp",
     "taxID": "06052780654",
     "email": "info@ecoasfalti.it",

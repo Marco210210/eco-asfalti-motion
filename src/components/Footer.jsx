@@ -28,7 +28,15 @@ export default function Footer() {
 
       <div className="container footer-inner">
         <div className="footer-brand">
-          <span className="brand-name">ECO ASFALTI <span className="accent">S.R.L.</span></span>
+          <a href="#hero" className="footer-logo-link" aria-label="Eco Asfalti SRL — torna all'inizio">
+            <img
+              className="footer-logo"
+              src={`${import.meta.env.BASE_URL}images/eco-asfalti-logo.png`}
+              width="668"
+              height="589"
+              alt=""
+            />
+          </a>
           <p>Conglomerati bituminosi e pavimentazioni stradali. Qualità certificata, impegno sostenibile.</p>
         </div>
         <nav className="footer-nav" aria-label="Navigazione footer">

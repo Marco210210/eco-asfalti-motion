@@ -3,13 +3,15 @@ import { motion, useMotionValue, useMotionValueEvent, useScroll, useReducedMotio
 
 const POINTER_DRAG_GAIN = 1.75
 const TOUCHPAD_GAIN = 3.4
+const MATERIAL_IMAGE_BASE = `${import.meta.env.BASE_URL}images/materials/`
 
 const MATERIALS = [
-  { index: '01', media: 'hm-base', title: 'Conglomerato di base', desc: 'Strato portante ad elevata stabilità: distribuisce i carichi e dà una fondazione solida.' },
-  { index: '02', media: 'hm-binder', title: 'Binder di collegamento', desc: 'Il legante strutturale tra base e usura: coesione e resistenza alle deformazioni.' },
+  { index: '01', image: 'conglomerato-base.webp', alt: 'Dettaglio ravvicinato della struttura granulare di un conglomerato bituminoso', title: 'Conglomerato di base', desc: 'Strato portante ad elevata stabilità: distribuisce i carichi e dà una fondazione solida.' },
+  { index: '02', image: 'binder-collegamento.webp', alt: 'Operatori durante la stesa di conglomerato bituminoso in un cantiere stradale', title: 'Binder di collegamento', desc: 'Il legante strutturale tra base e usura: coesione e resistenza alle deformazioni.' },
   {
     index: '03',
-    media: 'hm-usura',
+    image: 'conglomerato-usura.webp',
+    alt: 'Rullo compressore durante la compattazione di conglomerato bituminoso appena steso',
     title: "Conglomerato d'usura (tappetino)",
     desc: 'La superficie a contatto con il traffico: aderenza, regolarità e resistenza.',
     variants: [
@@ -18,17 +20,19 @@ const MATERIALS = [
       'Usura Splittmastix Asphalt (SMA) con bitume modificato',
     ],
   },
-  { index: '04', media: 'hm-drenante', title: 'Usura drenante', desc: "La porosità aperta favorisce il drenaggio dell'acqua e contribuisce a ridurre il rumore di rotolamento." },
+  { index: '04', image: 'usura-drenante.webp', alt: 'Dettaglio ravvicinato di una superficie bituminosa a grana aperta', title: 'Usura drenante', desc: "La porosità aperta favorisce il drenaggio dell'acqua e contribuisce a ridurre il rumore di rotolamento." },
   {
     index: '05',
-    media: 'hm-cam',
+    image: 'materiali-cam.webp',
+    alt: 'RAP lavorato e separato in cumuli granulometrici per il riutilizzo nelle miscele bituminose',
     title: 'Materiali CAM',
     tag: 'D.M. 5 agosto 2024',
     desc: "I CAM Strade (Criteri Ambientali Minimi), adottati con il D.M. 5 agosto 2024, stabiliscono requisiti ambientali per la progettazione e l'esecuzione dei lavori sulle infrastrutture stradali, favorendo l'impiego di conglomerati a ridotto impatto e materiali riciclati negli appalti pubblici.",
   },
   {
     index: '06',
-    media: 'hm-remade',
+    image: 'conglomerati-remade.webp',
+    alt: 'Cumuli reali di pavimentazione asfaltica recuperata e pronta per essere reimpiegata',
     className: 'remade-card',
     title: 'Conglomerati certificati ReMade',
     tag: 'Cert. 1591/001',
@@ -55,8 +59,13 @@ function Card({ item }) {
       whileHover={reduce ? undefined : { y: -12, rotate: -0.6 }}
       transition={{ type: 'spring', stiffness: 240, damping: 20 }}
     >
-      <div className={`h-card-media ${item.media}`} aria-hidden="true">
-        <span className="material-scan" />
+      <div className="h-card-media">
+        <img
+          src={`${MATERIAL_IMAGE_BASE}${item.image}`}
+          alt={item.alt}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div className="h-card-body">
         <div className="h-card-meta">

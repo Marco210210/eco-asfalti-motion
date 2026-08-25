@@ -36,6 +36,13 @@ export default function AuthGate({ children }) {
   return (
     <main className="access-gate">
       <form className="access-panel" onSubmit={handleSubmit}>
+        <img
+          className="access-logo"
+          src={`${import.meta.env.BASE_URL}images/eco-asfalti-logo.png`}
+          width="668"
+          height="589"
+          alt=""
+        />
         <span className="access-eyebrow">Area riservata</span>
         <h1>Eco Asfalti</h1>
         <p>Inserisci la password per visualizzare questa proposta.</p>
