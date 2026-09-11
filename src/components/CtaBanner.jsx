@@ -6,10 +6,10 @@ export default function CtaBanner() {
     <section className="cta-banner">
       <div className="container">
         <Reveal className="cta-inner">
-          <h2>Iniziamo il tuo cantiere</h2>
-          <p>Il nostro ufficio tecnico ti guida dalla scelta del materiale fino alla stesa finale.</p>
+          <h2>La tua prossima fornitura parte da qui.</h2>
+          <p>Conglomerati bituminosi e prodotti CAM: troviamo la miscela adatta al tuo progetto.</p>
           <Magnetic strength={0.5}>
-            <a href="#contatti" className="btn">Richiedi un preventivo</a>
+            <a href="#contatti" className="btn">Parliamo della tua fornitura</a>
           </Magnetic>
         </Reveal>
       </div>

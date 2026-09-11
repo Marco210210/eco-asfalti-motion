@@ -163,8 +163,8 @@ export default function Paver() {
 
       <div className="paver-heading">
         <span className="eyebrow">Dal conglomerato alla superficie</span>
-        <h2 className="paver-title" id="come-nasce">Come nasce <em>una strada.</em></h2>
-        <p>Precisione di stesa, controllo degli spessori e compattazione: ogni passaggio costruisce la prestazione finale.</p>
+        <h3 className="paver-title" id="come-nasce">La materia <em>prende strada.</em></h3>
+        <p>Dopo la produzione e il recupero, completiamo la filiera con la stesa, la compattazione e la manutenzione delle pavimentazioni.</p>
       </div>
 
       <div className="paver-stage" ref={stageRef} aria-hidden="true">

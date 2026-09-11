@@ -1,38 +1,29 @@
 import Reveal from './Reveal.jsx'
 
 const SERVICES = [
-  { num: '01', title: 'Produzione di conglomerati', desc: 'Produzione interna di conglomerato bituminoso, incluse miscele ReMade con contenuto riciclato certificato fino al 45%.' },
-  { num: '02', title: 'Recupero del fresato', desc: "Recupero R5 del conglomerato bituminoso EER 17 03 02 e reimpiego del materiale nel ciclo produttivo, nel rispetto dell'AUA vigente." },
-  { num: '03', title: 'Stesa e manutenzione', desc: 'Fresatura, ripristino e manutenzione di strade, piazzali e pavimentazioni con squadre e mezzi dedicati.' },
-  { num: '04', title: 'Noleggio mezzi meccanici', desc: 'Noleggio di mezzi meccanici per lavorazioni stradali e attività di cantiere.' },
-  { num: '05', title: 'Supporto tecnico', desc: 'Analisi delle esigenze, scelta della miscela e sopralluoghi per definire la soluzione più adatta al progetto.' },
+  { num: '01', href: '#produzione', title: 'Produzione', label: 'La nostra attività principale', desc: 'Conglomerati bituminosi e prodotti ecologici CAM. Tutto parte da qui.' },
+  { num: '02', href: '#recupero', title: 'Recupero rifiuti', label: 'La materia torna risorsa', desc: 'Recupero del fresato e reimpiego nel ciclo produttivo.' },
+  { num: '03', href: '#pavimentazioni', title: 'Pavimentazioni', label: 'A completamento della filiera', desc: 'Esecuzione lavori e manutenzione al servizio delle infrastrutture.' },
 ]
 
 export default function Servizi() {
   return (
-    <section className="section" id="servizi">
+    <section className="chapter-index" id="servizi" aria-label="Le nostre attività, in ordine di priorità">
       <div className="container">
         <Reveal className="section-head">
-          <span className="eyebrow">Servizi</span>
-          <h2 className="section-title">Cosa <span className="out">facciamo</span></h2>
+          <span className="eyebrow">Tre attività. Una direzione.</span>
         </Reveal>
 
-        <div className="stack">
+        <div className="chapter-index-grid">
           {SERVICES.map((s, i) => (
-            <div
-              className="stack-card"
-              key={s.num}
-              style={{ top: `calc(90px + ${i * 18}px)`, zIndex: i + 1 }}
-            >
-              <div>
-                <div className="stack-card-num">{s.num}</div>
-                <h3>{s.title}</h3>
+            <Reveal key={s.num} delay={i * 0.08}>
+              <a className={`chapter-link${i === 0 ? ' chapter-link-primary' : ''}`} href={s.href}>
+                <span className="chapter-link-top"><span>{s.num}</span><span aria-hidden="true">↗</span></span>
+                <span className="chapter-link-label">{s.label}</span>
+                <h2>{s.title}</h2>
                 <p>{s.desc}</p>
-              </div>
-              <span className="sc-icon" aria-hidden="true">
-                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              </span>
-            </div>
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>

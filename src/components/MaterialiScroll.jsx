@@ -3,15 +3,16 @@ import { motion, useMotionValue, useMotionValueEvent, useScroll, useReducedMotio
 
 const POINTER_DRAG_GAIN = 1.75
 const TOUCHPAD_GAIN = 3.4
-const MATERIAL_IMAGE_BASE = `${import.meta.env.BASE_URL}images/materials/`
+const MATERIAL_IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
 
-const MATERIALS = [
-  { index: '01', image: 'conglomerato-base.webp', alt: 'Dettaglio ravvicinato della struttura granulare di un conglomerato bituminoso', title: 'Conglomerato di base', desc: 'Strato portante ad elevata stabilità: distribuisce i carichi e dà una fondazione solida.' },
-  { index: '02', image: 'binder-collegamento.webp', alt: 'Operatori durante la stesa di conglomerato bituminoso in un cantiere stradale', title: 'Binder di collegamento', desc: 'Il legante strutturale tra base e usura: coesione e resistenza alle deformazioni.' },
+const MATERIALS_UNSORTED = [
+  { index: '01', image: 'materials/base-editoriale.webp', illustrative: true, alt: 'Immagine illustrativa: sezione di conglomerato di base con aggregati grossi nella matrice bituminosa', title: 'Conglomerato di base', desc: 'Strato portante ad elevata stabilità: distribuisce i carichi e dà una fondazione solida.', variants: ['Disponibile anche la miscela CB BASEBINDER HD.'] },
+  { index: '02', image: 'materials/binder-editoriale.webp', illustrative: true, alt: 'Immagine illustrativa: binder sfuso a grana intermedia in una vaschetta di campionamento', title: 'Binder di collegamento', desc: 'Lo strato di collegamento tra base e usura: coesione e resistenza alle deformazioni.' },
   {
     index: '03',
-    image: 'conglomerato-usura.webp',
-    alt: 'Rullo compressore durante la compattazione di conglomerato bituminoso appena steso',
+    image: 'materials/usura-editoriale.webp',
+    illustrative: true,
+    alt: 'Immagine illustrativa: tappetino bituminoso steso, a tessitura fine e compatta',
     title: "Conglomerato d'usura (tappetino)",
     desc: 'La superficie a contatto con il traffico: aderenza, regolarità e resistenza.',
     variants: [
@@ -20,35 +21,29 @@ const MATERIALS = [
       'Usura Splittmastix Asphalt (SMA) con bitume modificato',
     ],
   },
-  { index: '04', image: 'usura-drenante.webp', alt: 'Dettaglio ravvicinato di una superficie bituminosa a grana aperta', title: 'Usura drenante', desc: "La porosità aperta favorisce il drenaggio dell'acqua e contribuisce a ridurre il rumore di rotolamento." },
+  { index: '04', image: 'materials/drenante-editoriale.webp', illustrative: true, alt: 'Immagine illustrativa: conglomerato drenante con vuoti aperti tra gli aggregati', title: 'Usura drenante', desc: "La porosità aperta favorisce il drenaggio dell'acqua e contribuisce a ridurre il rumore di rotolamento." },
   {
     index: '05',
-    image: 'materiali-cam.webp',
-    alt: 'RAP lavorato e separato in cumuli granulometrici per il riutilizzo nelle miscele bituminose',
-    title: 'Materiali CAM',
-    tag: 'D.M. 5 agosto 2024',
-    desc: "I CAM Strade (Criteri Ambientali Minimi), adottati con il D.M. 5 agosto 2024, stabiliscono requisiti ambientali per la progettazione e l'esecuzione dei lavori sulle infrastrutture stradali, favorendo l'impiego di conglomerati a ridotto impatto e materiali riciclati negli appalti pubblici.",
+    image: 'impianto-01.webp',
+    alt: 'Foto reale delle aree di stoccaggio e dell’impianto Eco Asfalti a Nocera Superiore',
+    title: 'Conglomerati per i CAM',
+    tag: 'Prodotti ecologici',
+    className: 'cam-product-card',
+    desc: "Conglomerati con materie prime secondarie per i progetti che richiedono i Criteri Ambientali Minimi. Un nuovo impiego per la materia recuperata, con attenzione alla qualità e all’ambiente.",
   },
   {
     index: '06',
-    image: 'conglomerati-remade.webp',
-    alt: 'Cumuli reali di pavimentazione asfaltica recuperata e pronta per essere reimpiegata',
+    image: 'impianto-03.webp',
+    alt: 'Foto reale dell’impianto di produzione Eco Asfalti',
     className: 'remade-card',
     title: 'Conglomerati certificati ReMade',
     tag: 'Cert. 1591/001',
-    desc: 'Percentuali di materiale riciclato determinate secondo il Disciplinare Tecnico ReMade® 2.0_2023:',
-    variants: [
-      'CB Base TQ — 40%',
-      'CB Base HD — 40%',
-      'CB Basebinder HD — 16%',
-      'CB Binder TQ — 36%',
-      'CB Binder HD M — 36%',
-      'CB Usura A HD M — 45%',
-      'CB Usura B HD — 45%',
-      'CB Usura TQ — 27%',
-    ],
+    desc: 'Otto miscele con contenuto riciclato certificato dal 16% al 45%. Le percentuali di ogni prodotto sono consultabili nel certificato ReMade®.',
+    certificate: true,
   },
 ]
+
+const MATERIALS = [MATERIALS_UNSORTED[4], MATERIALS_UNSORTED[5], ...MATERIALS_UNSORTED.slice(0, 4)].map((item, index) => ({ ...item, index: String(index + 1).padStart(2, '0') }))
 
 function Card({ item }) {
   const reduce = useReducedMotion()
@@ -63,9 +58,12 @@ function Card({ item }) {
         <img
           src={`${MATERIAL_IMAGE_BASE}${item.image}`}
           alt={item.alt}
+          width={item.illustrative ? 960 : 2200}
+          height={item.illustrative ? 640 : 1238}
           loading="lazy"
           decoding="async"
         />
+        <span className="material-image-caption">{item.illustrative ? 'Immagine illustrativa' : 'Il nostro impianto'}</span>
       </div>
       <div className="h-card-body">
         <div className="h-card-meta">
@@ -80,8 +78,7 @@ function Card({ item }) {
           </ul>
         )}
         <p className="technical-request">
-          Per ricevere la scheda tecnica di ogni prodotto, ci contatti tramite email:{' '}
-          <a href="mailto:info@ecoasfalti.it">info@ecoasfalti.it</a>
+          {item.certificate ? <a href={`${import.meta.env.BASE_URL}certificazioni/remade.pdf`} target="_blank" rel="noreferrer">Apri il certificato ReMade (PDF) ↗</a> : <a href="#contatti">Richiedi informazioni sul prodotto ↗</a>}
         </p>
       </div>
     </motion.article>
@@ -235,7 +232,7 @@ export default function MaterialiScroll() {
   }, [horizontalTravel, reduce, trackX])
 
   const handlePointerDown = (event) => {
-    if (horizontalTravel <= 0 || (event.pointerType === 'mouse' && event.button !== 0)) return
+    if (horizontalTravel <= 0 || event.target.closest('a, button') || (event.pointerType === 'mouse' && event.button !== 0)) return
 
     dragRef.current = {
       active: true,
@@ -284,7 +281,7 @@ export default function MaterialiScroll() {
     if (horizontalTravel > 0) {
       moveTrackBy(distance)
     } else {
-      trackRef.current?.scrollBy({ left: distance, behavior: 'smooth' })
+      trackRef.current?.scrollBy({ left: distance, behavior: reduce ? 'auto' : 'smooth' })
     }
   }
 
@@ -306,10 +303,10 @@ export default function MaterialiScroll() {
 
   if (reduce) {
     return (
-      <section className="section" id="materiali">
+      <section className="section" id="materiali" ref={ref}>
         <div className="container section-head">
-          <span className="eyebrow">I materiali</span>
-          <h2 className="section-title">Uno strato per ogni esigenza</h2>
+          <span className="eyebrow">La nostra produzione</span>
+          <h2 className="section-title">Miscele per ogni esigenza</h2>
           <p className="h-scroll-hint">Trascina le card o scorri orizzontalmente</p>
         </div>
         <div ref={trackRef} className="h-track" style={{ overflowX: 'auto', paddingBottom: '1rem' }} {...trackInteractionProps}>
@@ -328,8 +325,8 @@ export default function MaterialiScroll() {
     >
       <div className="h-scroll-sticky">
         <div className="h-scroll-head">
-          <span className="eyebrow">I materiali</span>
-          <h2 className="section-title">Uno strato <span className="out">per ogni</span> esigenza</h2>
+          <span className="eyebrow">La nostra produzione</span>
+          <h2 className="section-title">Miscele <span className="out">per ogni</span> esigenza</h2>
           <p className="h-scroll-hint">Trascina le card o usa il touchpad in orizzontale</p>
         </div>
         <motion.div

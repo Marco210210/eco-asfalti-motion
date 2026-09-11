@@ -97,8 +97,8 @@ export default function Contatti() {
             </div>
           </div>
           <div className="field">
-            <label htmlFor="messaggio">Descrivi il tuo progetto <span className="req" aria-hidden="true">*</span></label>
-            <textarea id="messaggio" name="messaggio" rows="4" minLength="10" maxLength="5000" required></textarea>
+            <label htmlFor="messaggio">Di quale fornitura o servizio hai bisogno? <span className="req" aria-hidden="true">*</span></label>
+            <textarea id="messaggio" name="messaggio" rows="4" placeholder="Indica materiale, quantità indicative e luogo di consegna, oppure descrivi la tua richiesta." minLength="10" maxLength="5000" required></textarea>
           </div>
           <div className="privacy-check">
             <input type="checkbox" id="privacy_acceptance" name="privacy_acceptance" value="1" required />

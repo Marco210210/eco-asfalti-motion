@@ -61,7 +61,6 @@ body {
   -webkit-font-smoothing: antialiased; overflow-x: hidden;
   transition: color 240ms ease, background-color 240ms ease;
 }
-body.preloading { overflow: hidden; height: 100vh; }
 
 img, svg { display: block; max-width: 100%; }
 img { height: auto; }
@@ -107,17 +106,6 @@ h1, h2, h3, h4 { font-family: "Inter", system-ui, sans-serif; font-weight: 800; 
 .link-arrow { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--orange); }
 .link-arrow span { transition: transform var(--dur) var(--ease); }
 .link-arrow:hover span { transform: translateX(6px); }
-
-/* =========================================================
-   PRELOADER
-   ========================================================= */
-.preloader { position: fixed; inset: 0; z-index: 999; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column; }
-.preloader-logo { width: clamp(82px, 10vw, 124px); margin-bottom: clamp(1rem, 3vh, 2rem); filter: drop-shadow(0 12px 24px rgba(0,0,0,0.35)); }
-.preloader-count { font-family: "Syne", sans-serif; font-weight: 800; font-size: clamp(4rem, 16vw, 12rem); color: var(--text); line-height: 1; letter-spacing: -0.04em; }
-.preloader-count .pc-accent { color: var(--orange); }
-.preloader-bar { width: min(60vw, 420px); height: 3px; background: var(--border); border-radius: 3px; margin-top: 1.5rem; overflow: hidden; }
-.preloader-bar span { display: block; height: 100%; background: var(--orange); transform-origin: 0 50%; }
-.preloader-label { margin-top: 1rem; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
 
 /* =========================================================
    CUSTOM CURSOR

@@ -1,15 +1,17 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 const FOOTER_LINKS = [
-  { href: '#azienda', label: 'Azienda' },
-  { href: '#materiali', label: 'Materiali' },
-  { href: '#servizi', label: 'Servizi' },
+  { href: '#produzione', label: 'Produzione' },
+  { href: '#recupero', label: 'Recupero rifiuti' },
+  { href: '#pavimentazioni', label: 'Pavimentazioni' },
   { href: '#certificazioni', label: 'Certificazioni' },
+  { href: '#azienda', label: 'Azienda' },
   { href: '#faq', label: 'FAQ' },
   { href: '#contatti', label: 'Contatti' },
 ]
 
 export default function Footer() {
+  const reduce = useReducedMotion()
   const year = new Date().getFullYear()
   const privacyPage = `${import.meta.env.BASE_URL}privacy-policy.html`
   const analyticsEnabled = Boolean(import.meta.env.VITE_GA_MEASUREMENT_ID?.trim())
@@ -18,7 +20,7 @@ export default function Footer() {
       <div className="footer-marquee" aria-hidden="true">
         <motion.div
           className="marquee-row"
-          animate={{ x: ['0%', '-50%'] }}
+          animate={reduce ? undefined : { x: ['0%', '-50%'] }}
           transition={{ duration: 22, ease: 'linear', repeat: Infinity }}
         >
           <span className="footer-mark">ECO ASFALTI · ECO ASFALTI ·</span>
@@ -37,7 +39,7 @@ export default function Footer() {
               alt=""
             />
           </a>
-          <p>Conglomerati bituminosi e pavimentazioni stradali. Qualità certificata, impegno sostenibile.</p>
+          <p>Produzione di conglomerati bituminosi e prodotti ecologici CAM. Nuovo valore alla materia, qualità certificata.</p>
         </div>
         <nav className="footer-nav" aria-label="Navigazione footer">
           {FOOTER_LINKS.map((l) => (<a key={l.href} href={l.href}>{l.label}</a>))}

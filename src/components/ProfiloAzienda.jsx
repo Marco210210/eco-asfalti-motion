@@ -27,11 +27,11 @@ export default function ProfiloAzienda() {
 
         <Reveal className="company-copy" delay={0.08}>
           <span className="eyebrow">Profilo aziendale</span>
-          <h2 className="section-title">Un ciclo <span className="out">completo.</span></h2>
+          <h2 className="section-title">Un impianto.<br /><span className="out">Una visione.</span></h2>
           <p className="company-lead">
-            Eco Asfalti produce conglomerati bituminosi, recupera rifiuti non pericolosi e materiali
-            provenienti dalla fresatura delle pavimentazioni, noleggia mezzi meccanici e svolge
-            manutenzione stradale.
+            Eco Asfalti ha il proprio cuore nella produzione di conglomerati bituminosi e prodotti
+            ecologici. Il recupero del fresato alimenta il ciclo produttivo; l’esecuzione di
+            pavimentazioni completa la filiera come attività complementare.
           </p>
           <p>
             Produzione e recupero convivono nello stesso sito operativo: il fresato torna risorsa,

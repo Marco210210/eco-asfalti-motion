@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 
-const TEXT = "Non posiamo semplicemente asfalto: costruiamo infrastrutture che collegano persone, resistono al tempo e rispettano l'ambiente."
+const TEXT = "Produciamo conglomerati bituminosi. Diamo nuova vita alla materia, con prodotti ecologici e un impianto che evolve insieme all'ambiente."
 const WORDS = TEXT.split(' ')
 
 function Word({ children, range, progress }) {
@@ -23,7 +23,7 @@ export default function Manifesto() {
             : WORDS.map((w, i) => {
                 const start = i / WORDS.length
                 const end = start + 1 / WORDS.length
-                const em = /ambiente|collegano|tempo/i.test(w)
+                const em = /materia|ecologici|ambiente/i.test(w)
                 return (
                   <Word key={i} range={[start, end]} progress={scrollYProgress}>
                     {em ? <em>{w}</em> : w}

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
 const NAV_LINKS = [
-  { href: '#azienda', label: 'Azienda' },
-  { href: '#materiali', label: 'Materiali' },
-  { href: '#servizi', label: 'Servizi' },
+  { href: '#produzione', label: 'Produzione' },
+  { href: '#recupero', label: 'Recupero' },
+  { href: '#pavimentazioni', label: 'Pavimentazioni' },
   { href: '#certificazioni', label: 'Certificazioni' },
+  { href: '#azienda', label: 'Azienda' },
 ]
 
 export default function Header() {
