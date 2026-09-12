@@ -45,14 +45,20 @@ const MATERIALS_UNSORTED = [
 
 const MATERIALS = [MATERIALS_UNSORTED[4], MATERIALS_UNSORTED[5], ...MATERIALS_UNSORTED.slice(0, 4)].map((item, index) => ({ ...item, index: String(index + 1).padStart(2, '0') }))
 
-function Card({ item }) {
+function Card({ item, isActive, onActivate, onDeactivate }) {
   const reduce = useReducedMotion()
 
   return (
     <motion.article
-      className={`h-card${item.className ? ` ${item.className}` : ''}`}
+      className={`h-card${item.className ? ` ${item.className}` : ''}${isActive ? ' is-active' : ''}`}
       whileHover={reduce ? undefined : { y: -12, rotate: -0.6 }}
       transition={{ type: 'spring', stiffness: 240, damping: 20 }}
+      onMouseEnter={onActivate}
+      onMouseLeave={onDeactivate}
+      onFocus={onActivate}
+      onBlur={event => {
+        if (!event.currentTarget.contains(event.relatedTarget)) onDeactivate()
+      }}
     >
       <div className="h-card-media">
         <img
@@ -93,11 +99,32 @@ export default function MaterialiScroll() {
   const [horizontalTravel, setHorizontalTravel] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [trackActiveIndex, setTrackActiveIndex] = useState(0)
+  const [interactionIndex, setInteractionIndex] = useState(null)
   const reduce = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
   const trackX = useMotionValue(0)
   const lastProgressRef = useRef(0)
   const needsVerticalAlignmentRef = useRef(false)
+
+  const updateActiveCard = useCallback((motionX = trackX.get() - (trackRef.current?.scrollLeft || 0)) => {
+    const track = trackRef.current
+    const cards = track?.querySelectorAll('.h-card')
+    if (!cards?.length) return
+
+    const viewportCenter = document.documentElement.clientWidth / 2
+    let closestIndex = 0
+    let closestDistance = Number.POSITIVE_INFINITY
+    cards.forEach((card, index) => {
+      const cardCenter = track.offsetLeft + card.offsetLeft + card.offsetWidth / 2 + motionX
+      const distance = Math.abs(cardCenter - viewportCenter)
+      if (distance < closestDistance) {
+        closestDistance = distance
+        closestIndex = index
+      }
+    })
+    setTrackActiveIndex(closestIndex)
+  }, [trackX])
 
   const moveTrackBy = useCallback((trackDelta) => {
     if (horizontalTravel <= 0 || reduce || !ref.current) {
@@ -117,16 +144,20 @@ export default function MaterialiScroll() {
 
     if (progress <= 0.001) {
       trackX.set(0)
+      setTrackActiveIndex(0)
       return
     }
     if (progress >= 0.999) {
       trackX.set(-horizontalTravel)
+      setTrackActiveIndex(MATERIALS.length - 1)
       return
     }
 
     const next = trackX.get() - (progress - previous) * horizontalTravel
     trackX.set(Math.min(0, Math.max(-horizontalTravel, next)))
   })
+
+  useMotionValueEvent(trackX, 'change', updateActiveCard)
 
   useEffect(() => {
     const progress = scrollYProgress.get()
@@ -147,16 +178,11 @@ export default function MaterialiScroll() {
     const measure = () => {
       if (!active) return
 
-      if (!desktopQuery.matches) {
-        setHorizontalTravel(0)
-        setSectionHeight(null)
-        return
-      }
-
       const viewportWidth = document.documentElement.clientWidth
       const travel = Math.max(0, Math.ceil(track.scrollWidth - viewportWidth))
       setHorizontalTravel(travel)
-      setSectionHeight(Math.ceil(window.innerHeight + travel * 1.25))
+      setSectionHeight(Math.ceil(window.innerHeight + travel * (desktopQuery.matches ? 1.25 : 1.08)))
+      window.requestAnimationFrame(() => updateActiveCard())
     }
 
     measure()
@@ -173,7 +199,7 @@ export default function MaterialiScroll() {
       window.removeEventListener('resize', measure)
       desktopQuery.removeEventListener('change', measure)
     }
-  }, [])
+  }, [updateActiveCard])
 
   useEffect(() => {
     const track = trackRef.current
@@ -309,8 +335,8 @@ export default function MaterialiScroll() {
           <h2 className="section-title">Miscele per ogni esigenza</h2>
           <p className="h-scroll-hint">Trascina le card o scorri orizzontalmente</p>
         </div>
-        <div ref={trackRef} className="h-track" style={{ overflowX: 'auto', paddingBottom: '1rem' }} {...trackInteractionProps}>
-          {MATERIALS.map((m) => <Card key={m.index} item={m} />)}
+        <div ref={trackRef} className="h-track" style={{ overflowX: 'auto', paddingBottom: '1rem' }} onScroll={() => updateActiveCard()} {...trackInteractionProps}>
+          {MATERIALS.map((m, index) => <Card key={m.index} item={m} isActive={(interactionIndex ?? trackActiveIndex) === index} onActivate={() => setInteractionIndex(index)} onDeactivate={() => setInteractionIndex(null)} />)}
         </div>
       </section>
     )
@@ -327,7 +353,7 @@ export default function MaterialiScroll() {
         <div className="h-scroll-head">
           <span className="eyebrow">La nostra produzione</span>
           <h2 className="section-title">Miscele <span className="out">per ogni</span> esigenza</h2>
-          <p className="h-scroll-hint">Trascina le card o usa il touchpad in orizzontale</p>
+          <p className="h-scroll-hint">Scorri la pagina oppure trascina le card</p>
         </div>
         <motion.div
           ref={trackRef}
@@ -335,7 +361,7 @@ export default function MaterialiScroll() {
           style={{ x: trackX }}
           {...trackInteractionProps}
         >
-          {MATERIALS.map((m) => <Card key={m.index} item={m} />)}
+          {MATERIALS.map((m, index) => <Card key={m.index} item={m} isActive={(interactionIndex ?? trackActiveIndex) === index} onActivate={() => setInteractionIndex(index)} onDeactivate={() => setInteractionIndex(null)} />)}
         </motion.div>
       </div>
     </section>

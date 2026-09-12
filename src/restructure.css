@@ -23,11 +23,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .chapter-index-grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 1rem; }
 .chapter-index-grid > * { min-width: 0; }
 .chapter-link { display: flex; flex-direction: column; height: 100%; min-height: 290px; padding: 1.8rem; border: 1px solid var(--border-2); border-radius: var(--radius); background: var(--surface); transition: transform 450ms var(--ease), border-color 450ms, background 450ms; }
-.chapter-link:hover { transform: translateY(-8px); border-color: var(--orange); }
-.chapter-link-primary { border-color: var(--orange); background: linear-gradient(135deg, var(--orange-soft), var(--surface)); }
+.chapter-link.is-active { transform: translateY(-8px); border-color: var(--card-active); background: linear-gradient(135deg, var(--card-active-soft), var(--surface)); box-shadow: 0 20px 55px rgba(var(--card-active-rgb), 0.16); }
+.chapter-link.is-active .chapter-link-top { color: var(--card-active); }
 .chapter-link-top { display: flex; justify-content: space-between; color: var(--orange); font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 2rem; }
 .chapter-link-top > :last-child { transition: transform 450ms var(--ease); }
-.chapter-link:hover .chapter-link-top > :last-child { transform: translate(4px, -4px); }
+.chapter-link.is-active .chapter-link-top > :last-child { transform: translate(4px, -4px); }
 .chapter-link-label { color: var(--text-muted); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
 .chapter-link h2 { margin: 0.55rem 0 0.8rem; font-size: clamp(1.45rem, 2.6vw, 2.1rem); }
 .chapter-link p { color: var(--text-muted); font-size: 0.9rem; max-width: 34ch; }
@@ -68,12 +68,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .cam-product-card { border-color: var(--eco); }
 .cam-product-card .h-card-tag { color: var(--eco); border-color: var(--eco); }
 .plant-gallery .section-intro { max-width: 65ch; }
-.plant-gallery-grid .plant-shot-2 figure { min-height: 460px; }
+.plant-gallery-grid .plant-shot { grid-column: span 6; }
+.plant-gallery-grid .plant-shot-1 figure, .plant-gallery-grid .plant-shot-4 figure { min-height: 460px; }
 .cert-filters { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-bottom: 2rem; }
 .cert-filters button { border: 1px solid var(--border-2); background: transparent; color: var(--text-muted); padding: 0.7rem 1.1rem; border-radius: 100px; font: inherit; font-size: 0.78rem; cursor: pointer; transition: background 200ms, color 200ms; }
 .cert-filters button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
-.cert-card-featured { background: linear-gradient(135deg, var(--eco-soft), var(--surface)); border-color: var(--eco); }
 .cert-card-featured .cert-badge { background: var(--eco-soft); color: var(--eco); }
+.cert-card.is-active { transform: translateY(-6px); border-color: var(--card-active); background: linear-gradient(135deg, var(--card-active-soft), var(--surface)); box-shadow: 0 20px 55px rgba(var(--card-active-rgb), 0.16); }
+.cert-card.is-active .cert-badge { background: var(--card-active-soft); color: var(--card-active); }
+.cert-card.is-active .cert-tag { color: var(--card-active); }
 .cert-card .cert-tag { color: var(--orange); }
 .cert-card .cert-valid, .cert-card .cert-number { color: var(--text-muted); }
 .cert-download { display: flex; align-items: center; justify-content: space-between; margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--border-2); font-size: 0.82rem; font-weight: 700; }
@@ -179,9 +182,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   .anas-project-top { letter-spacing: 0.04em; font-size: 0.6rem; }
   .anas-project-top > :first-child { font-size: 0.73rem; }
   .anas-project-bottom { flex-direction: column; align-items: flex-start; font-size: 0.57rem; }
-  .plant-gallery-grid .plant-shot-2 figure { min-height: 300px; }
+  .plant-gallery-grid .plant-shot figure { min-height: 300px; }
+  .plant-gallery-grid .plant-shot { grid-column: 1 / -1; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-material-flow span, .recycled-seal::before, .energy-line i { animation: none; }
-  .chapter-link:hover, .chapter-link:hover .chapter-link-top > :last-child { transform: none; }
+  .chapter-link.is-active, .chapter-link.is-active .chapter-link-top > :last-child { transform: none; }
 }

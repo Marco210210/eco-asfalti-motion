@@ -15,7 +15,7 @@ Palette carbone caldo + arancione vivido, tipografia **Syne + Inter**.
   l'inquadratura completa in 16:9.
 - **Marquee doppi** in direzioni opposte (uno pieno, uno outline inclinato).
 - **Manifesto**: testo che si "accende" parola per parola allo scroll.
-- **★ Materiali a scorrimento orizzontale** (pinned).
+- **★ Materiali a scorrimento orizzontale** (pinned anche su mobile, guidato dallo scroll verticale e trascinabile).
 - **Prodotti CAM**: fotografia in parallax e sigillo del contenuto riciclato animato.
 - **Transizione BTZ → GPL**: flusso luminoso animato.
 - **Recupero**: ciclo circolare che ruota allo scroll e sequenza di apparizione dei passaggi.
@@ -23,6 +23,7 @@ Palette carbone caldo + arancione vivido, tipografia **Syne + Inter**.
 - **Attività**: tre collegamenti con reveal progressivo e movimento al passaggio del mouse.
 - **Lavoro ANAS**: scheda con tilt 3D che segue il mouse.
 - **Certificazioni**: filtri per categoria e apertura diretta dei PDF.
+- **Card contestuali**: attività, miscele e certificazioni evidenziano un solo elemento alla volta; su mobile segue il centro dello schermo, su desktop hover e tastiera.
 - **FAQ** con accordion animato **+ JSON-LD schema.org FAQPage** (AEO).
 - Barra di avanzamento scroll, header che si nasconde/mostra, footer con nome gigante scorrevole.
 

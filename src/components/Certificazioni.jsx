@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Reveal from './Reveal.jsx'
+import useActiveCards from '../hooks/useActiveCards.js'
 
 const CERTS = [
   { file: 'iso-9001.pdf', group: 'Gestione', title: 'ISO 9001:2015', tag: 'Qualità', desc: 'Sistema di gestione per la qualità.', number: 'QMS-020317073-25', validUntil: '27.03.2028' },
@@ -29,6 +30,7 @@ const FILTERS = ['Tutte', 'Prodotti ecologici', 'Gestione', 'Qualificazioni']
 export default function Certificazioni() {
   const [filter, setFilter] = useState('Tutte')
   const certificates = [...CERTS].sort((a, b) => Number(b.group === 'Prodotti ecologici') - Number(a.group === 'Prodotti ecologici')).filter(cert => filter === 'Tutte' || cert.group === filter)
+  const { activeIndex, propsFor } = useActiveCards(certificates.length)
   return (
     <section className="section certifications-section" id="certificazioni">
       <div className="container">
@@ -43,7 +45,7 @@ export default function Certificazioni() {
         <p className="sr-only" role="status">{certificates.length} documenti disponibili</p>
         <div className="cert-grid">
           {certificates.map((cert, index) => (
-            <Reveal className={`cert-card${cert.group === 'Prodotti ecologici' ? ' cert-card-featured' : ''}`} key={`${filter}-${cert.title}`} delay={(index % 4) * 0.05}>
+            <Reveal className={`cert-card${cert.group === 'Prodotti ecologici' ? ' cert-card-featured' : ''}${activeIndex === index ? ' is-active' : ''}`} key={`${filter}-${cert.title}`} delay={(index % 4) * 0.05} {...propsFor(index)}>
               <div className="cert-card-top">
                 <div className="cert-badge" aria-hidden="true"><ShieldIcon /></div>
                 <span className="cert-valid">fino al {cert.validUntil}</span>

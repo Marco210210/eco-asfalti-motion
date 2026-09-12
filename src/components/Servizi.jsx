@@ -1,4 +1,5 @@
 import Reveal from './Reveal.jsx'
+import useActiveCards from '../hooks/useActiveCards.js'
 
 const SERVICES = [
   { num: '01', href: '#produzione', title: 'Produzione', label: 'La nostra attività principale', desc: 'Conglomerati bituminosi e prodotti ecologici CAM. Tutto parte da qui.' },
@@ -7,6 +8,8 @@ const SERVICES = [
 ]
 
 export default function Servizi() {
+  const { activeIndex, propsFor } = useActiveCards(SERVICES.length)
+
   return (
     <section className="chapter-index" id="servizi" aria-label="Le nostre attività, in ordine di priorità">
       <div className="container">
@@ -17,7 +20,7 @@ export default function Servizi() {
         <div className="chapter-index-grid">
           {SERVICES.map((s, i) => (
             <Reveal key={s.num} delay={i * 0.08}>
-              <a className={`chapter-link${i === 0 ? ' chapter-link-primary' : ''}`} href={s.href}>
+              <a className={`chapter-link${activeIndex === i ? ' is-active' : ''}`} href={s.href} {...propsFor(i)}>
                 <span className="chapter-link-top"><span>{s.num}</span><span aria-hidden="true">↗</span></span>
                 <span className="chapter-link-label">{s.label}</span>
                 <h2>{s.title}</h2>

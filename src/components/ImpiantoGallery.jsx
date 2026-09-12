@@ -3,8 +3,10 @@ import Reveal from './Reveal.jsx'
 const IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
 
 const PHOTOS = [
-  { src: `${IMAGE_BASE}impianto-01.webp`, alt: "Vista zenitale dell'impianto e delle aree di stoccaggio", label: 'Impianto e stoccaggi' },
-  { src: `${IMAGE_BASE}impianto-06.webp`, alt: "Impianto Eco Asfalti nel contesto urbano di Nocera Superiore", label: 'Territorio e infrastrutture' },
+  { src: `${IMAGE_BASE}impianto-01.webp`, alt: "Vista zenitale dell'impianto e delle aree di stoccaggio", label: 'Stoccaggio degli aggregati' },
+  { src: `${IMAGE_BASE}impianto-03.webp`, alt: "Vista ravvicinata dell'impianto Eco Asfalti e dei silos", label: "Cuore dell'impianto" },
+  { src: `${IMAGE_BASE}impianto-04.webp`, alt: "Vista aerea della linea di produzione Eco Asfalti", label: 'Linea di produzione' },
+  { src: `${IMAGE_BASE}impianto-06.webp`, alt: "Impianto Eco Asfalti nel contesto urbano di Nocera Superiore", label: 'Impianto e territorio' },
 ]
 
 export default function ImpiantoGallery() {
