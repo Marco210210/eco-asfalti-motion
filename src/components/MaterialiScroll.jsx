@@ -3,7 +3,8 @@ import { motion, useMotionValue, useMotionValueEvent, useScroll, useReducedMotio
 
 const POINTER_DRAG_GAIN = 1.75
 const TOUCHPAD_GAIN = 3.4
-const MOBILE_AUTO_SPEED = 22
+const MOBILE_CARD_INTERVAL = 4500
+const MOBILE_CARD_TRANSITION = 700
 const MOBILE_RESUME_DELAY = 1800
 const MATERIAL_IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
 
@@ -217,17 +218,69 @@ export default function MaterialiScroll() {
     if (!track || reduce) return undefined
 
     const mobileQuery = window.matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)')
-    let animationFrame = 0
-    let lastTime = 0
+    let advanceTimer = 0
+    let settleTimer = 0
     let loopWidth = 0
     let initialized = false
     let isVisible = false
     let isInteracting = false
-    let resumeAt = 0
-    let autoPosition = 0
+
+    const clearAdvance = () => window.clearTimeout(advanceTimer)
+
+    const normalizeLoop = () => {
+      if (!loopWidth) return
+      if (track.scrollLeft >= loopWidth * 2 - 2) track.scrollLeft -= loopWidth
+      if (track.scrollLeft <= 2) track.scrollLeft += loopWidth
+      updateActiveCard(-track.scrollLeft)
+    }
+
+    const getVisibleCards = () => [...track.querySelectorAll('.h-card')].filter(card => card.offsetWidth > 0)
+
+    const findClosestCardIndex = cards => {
+      const viewportCenter = track.scrollLeft + track.clientWidth / 2
+      let closestIndex = 0
+      let closestDistance = Number.POSITIVE_INFINITY
+      cards.forEach((card, index) => {
+        const distance = Math.abs(card.offsetLeft + card.offsetWidth / 2 - viewportCenter)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestIndex = index
+        }
+      })
+      return closestIndex
+    }
+
+    const scheduleAdvance = delay => {
+      clearAdvance()
+      if (!mobileQuery.matches || !isVisible || isInteracting || !loopWidth) return
+      advanceTimer = window.setTimeout(advanceOneCard, delay)
+    }
+
+    const advanceOneCard = () => {
+      if (!mobileQuery.matches || !isVisible || isInteracting || !loopWidth) return
+      const cards = getVisibleCards()
+      const currentIndex = findClosestCardIndex(cards)
+      const nextCard = cards[currentIndex + 1]
+      if (!nextCard) {
+        normalizeLoop()
+        scheduleAdvance(MOBILE_CARD_INTERVAL)
+        return
+      }
+
+      const gutter = Number.parseFloat(getComputedStyle(track).paddingLeft) || 0
+      track.scrollTo({ left: nextCard.offsetLeft - gutter, behavior: 'smooth' })
+      window.clearTimeout(settleTimer)
+      settleTimer = window.setTimeout(() => {
+        normalizeLoop()
+        scheduleAdvance(MOBILE_CARD_INTERVAL)
+      }, MOBILE_CARD_TRANSITION)
+    }
 
     const measureLoop = () => {
-      if (!mobileQuery.matches) return
+      if (!mobileQuery.matches) {
+        clearAdvance()
+        return
+      }
       const firstCard = track.querySelector('.h-card:not(.h-card-loop-copy)')
       const firstCopy = track.querySelector('[data-loop-copy="1"] .h-card')
       if (!firstCard || !firstCopy) return
@@ -235,46 +288,29 @@ export default function MaterialiScroll() {
       if (!initialized && loopWidth > 0) {
         initialized = true
         track.scrollLeft = loopWidth
-        autoPosition = loopWidth
         updateActiveCard(-track.scrollLeft)
+        scheduleAdvance(MOBILE_CARD_INTERVAL)
       }
-    }
-
-    const normalizeLoop = () => {
-      if (!loopWidth) return
-      if (autoPosition >= loopWidth * 2) autoPosition -= loopWidth
-      if (autoPosition <= 1) autoPosition += loopWidth
-      track.scrollLeft = autoPosition
     }
 
     const pauseForInteraction = () => {
       isInteracting = true
-      resumeAt = Number.POSITIVE_INFINITY
-      autoPosition = track.scrollLeft
+      clearAdvance()
+      window.clearTimeout(settleTimer)
     }
     const resumeAfterInteraction = () => {
       isInteracting = false
-      resumeAt = performance.now() + MOBILE_RESUME_DELAY
-      autoPosition = track.scrollLeft
+      normalizeLoop()
+      scheduleAdvance(MOBILE_RESUME_DELAY)
     }
-    const syncManualPosition = () => {
-      if (isInteracting) autoPosition = track.scrollLeft
-    }
-
-    const tick = time => {
-      const elapsed = lastTime ? Math.min(time - lastTime, 40) : 0
-      lastTime = time
-      if (mobileQuery.matches && isVisible && !isInteracting && time >= resumeAt && loopWidth) {
-        autoPosition += MOBILE_AUTO_SPEED * elapsed / 1000
-        track.scrollLeft = autoPosition
-        normalizeLoop()
-      }
-      animationFrame = window.requestAnimationFrame(tick)
+    const syncActiveCard = () => {
+      if (mobileQuery.matches) updateActiveCard(-track.scrollLeft)
     }
 
     const visibilityObserver = new IntersectionObserver(entries => {
       isVisible = entries[0]?.isIntersecting ?? false
-      lastTime = 0
+      if (isVisible) scheduleAdvance(MOBILE_CARD_INTERVAL)
+      else clearAdvance()
     }, { threshold: 0.15 })
     const resizeObserver = new ResizeObserver(measureLoop)
 
@@ -287,11 +323,11 @@ export default function MaterialiScroll() {
     track.addEventListener('pointerup', resumeAfterInteraction, { passive: true })
     track.addEventListener('pointercancel', resumeAfterInteraction, { passive: true })
     track.addEventListener('wheel', resumeAfterInteraction, { passive: true })
-    track.addEventListener('scroll', syncManualPosition, { passive: true })
-    animationFrame = window.requestAnimationFrame(tick)
+    track.addEventListener('scroll', syncActiveCard, { passive: true })
 
     return () => {
-      window.cancelAnimationFrame(animationFrame)
+      clearAdvance()
+      window.clearTimeout(settleTimer)
       visibilityObserver.disconnect()
       resizeObserver.disconnect()
       mobileQuery.removeEventListener('change', measureLoop)
@@ -299,7 +335,7 @@ export default function MaterialiScroll() {
       track.removeEventListener('pointerup', resumeAfterInteraction)
       track.removeEventListener('pointercancel', resumeAfterInteraction)
       track.removeEventListener('wheel', resumeAfterInteraction)
-      track.removeEventListener('scroll', syncManualPosition)
+      track.removeEventListener('scroll', syncActiveCard)
     }
   }, [reduce, updateActiveCard])
 
@@ -470,7 +506,7 @@ export default function MaterialiScroll() {
         <div className="h-scroll-head">
           <span className="eyebrow">La nostra produzione</span>
           <h2 className="section-title">Miscele <span className="out">per ogni</span> esigenza</h2>
-          <p className="h-scroll-hint">Trascina le card o scorri in orizzontale</p>
+          <p className="h-scroll-hint">Le card avanzano automaticamente · Trascina per esplorarle</p>
         </div>
         <motion.div
           ref={trackRef}

@@ -617,7 +617,7 @@ a.contact-value:hover { color: var(--orange); }
   .section-title { font-size: clamp(2.35rem, 8.2vw, 4.8rem); }
   .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  /* Touch devices use a slow, swipeable carousel while vertical scroll stays native. */
+  /* Touch devices advance one card at a time and keep native vertical scrolling. */
   .section#materiali { overflow: hidden; }
   .h-scroll { height: auto !important; padding-block: clamp(5rem, 10vw, 7rem); overflow: hidden; }
   .h-scroll-sticky { position: relative; top: auto; height: auto; min-height: 0; display: block; overflow: visible; }
@@ -636,7 +636,7 @@ a.contact-value:hover { color: var(--orange); }
   .h-card { flex: 0 0 min(78vw, 420px); width: auto; min-width: 0; height: auto; scroll-snap-align: start; transform: none !important; }
   .remade-card { flex-basis: min(88vw, 620px); }
   .h-card-media { height: 180px; }
-  .h-scroll .h-track { scroll-snap-type: none; }
+  .h-scroll .h-track { scroll-snap-type: x mandatory; }
   .h-scroll .h-card-loop-copy { display: contents; }
 }
 
