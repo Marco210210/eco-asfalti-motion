@@ -3,8 +3,8 @@ import { motion, useMotionValue, useMotionValueEvent, useScroll, useReducedMotio
 
 const POINTER_DRAG_GAIN = 1.75
 const TOUCHPAD_GAIN = 3.4
-const MOBILE_AUTO_SPEED = 10
-const MOBILE_RESUME_DELAY = 6500
+const MOBILE_AUTO_SPEED = 22
+const MOBILE_RESUME_DELAY = 1800
 const MATERIAL_IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
 
 const MATERIALS_UNSORTED = [
