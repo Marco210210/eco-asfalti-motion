@@ -303,6 +303,7 @@ h1, h2, h3, h4 { font-family: "Inter", system-ui, sans-serif; font-weight: 800; 
   content: "";
   flex: 0 0 max(1px, calc(var(--track-gutter) - var(--track-gap)));
 }
+.h-card-loop-copy { display: none; }
 .h-card { flex: 0 0 clamp(310px, 36vw, 430px); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; will-change: transform; position: relative; box-shadow: 0 24px 70px rgba(0,0,0,0.18); }
 .h-card, .h-card-body { min-width: 0; }
 .h-card-media { height: 210px; position: relative; overflow: hidden; background: var(--surface-2); }
@@ -616,15 +617,17 @@ a.contact-value:hover { color: var(--orange); }
   .section-title { font-size: clamp(2.35rem, 8.2vw, 4.8rem); }
   .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  /* Reduced-motion fallback stays a native swipeable carousel. */
+  /* Touch devices use a slow, swipeable carousel while vertical scroll stays native. */
   .section#materiali { overflow: hidden; }
+  .h-scroll { height: auto !important; padding-block: clamp(5rem, 10vw, 7rem); overflow: hidden; }
+  .h-scroll-sticky { position: relative; top: auto; height: auto; min-height: 0; display: block; overflow: visible; }
   .h-scroll-head { width: min(calc(100% - 2.5rem), var(--container)); margin: 0 auto 2.5rem; }
   .h-track {
     width: 100%; margin-inline: 0; padding-inline: max(1.25rem, calc((100vw - var(--container)) / 2));
     display: flex; gap: 1.4rem; overflow-x: auto; overflow-y: hidden;
     scroll-snap-type: x mandatory; scroll-padding-inline: 1.25rem;
     scrollbar-width: thin; scrollbar-color: var(--orange) var(--surface);
-    touch-action: pan-x pan-y; will-change: auto;
+    touch-action: pan-x pan-y; transform: none !important; will-change: auto;
   }
   .h-track::-webkit-scrollbar { height: 6px; }
   .h-track::-webkit-scrollbar-track { background: var(--surface); }
@@ -633,13 +636,8 @@ a.contact-value:hover { color: var(--orange); }
   .h-card { flex: 0 0 min(78vw, 420px); width: auto; min-width: 0; height: auto; scroll-snap-align: start; transform: none !important; }
   .remade-card { flex-basis: min(88vw, 620px); }
   .h-card-media { height: 180px; }
-
-  /* Standard touch layout: vertical page movement drives the horizontal story. */
-  .h-scroll { padding: 0; overflow: visible; }
-  .h-scroll .h-scroll-sticky { position: sticky; top: 0; height: 100vh; height: 100dvh; min-height: 0; display: flex; overflow: hidden; padding-block: calc(72px + 0.75rem) calc(64px + env(safe-area-inset-bottom)); }
-  .h-scroll .h-scroll-head { margin-bottom: 1rem; }
-  .h-scroll .h-track { overflow: visible; padding-bottom: 0; scrollbar-width: none; touch-action: pan-y; will-change: transform; }
-  .h-scroll .h-track::-webkit-scrollbar { display: none; }
+  .h-scroll .h-track { scroll-snap-type: none; }
+  .h-scroll .h-card-loop-copy { display: contents; }
 }
 
 @media (max-width: 900px) {
@@ -720,13 +718,6 @@ a.contact-value:hover { color: var(--orange); }
   .h-card-media { height: 150px; }
   .h-card-body { padding: 1.35rem; }
   .h-card-body h3 { font-size: 1.32rem; overflow-wrap: anywhere; }
-  .h-scroll .h-card-media { height: 112px; }
-  .h-scroll .h-card-body { padding: 1.05rem; }
-  .h-scroll .h-card-body h3 { font-size: 1.15rem; }
-  .h-scroll .h-card-body p { font-size: 0.8rem; line-height: 1.42; }
-  .h-scroll .product-variants { gap: 0.36rem; margin-top: 0.7rem; }
-  .h-scroll .product-variants li { font-size: 0.72rem; line-height: 1.3; }
-  .h-scroll .h-card-body .technical-request { margin-top: 0.7rem; padding-top: 0.6rem; font-size: 0.66rem; }
   .stack-card { position: relative !important; top: auto !important; min-height: 0; }
   .stack-card h3 { font-size: 1.45rem; overflow-wrap: anywhere; }
   .paver { height: 260vh; }

@@ -15,7 +15,7 @@ Palette carbone caldo + arancione vivido, tipografia **Syne + Inter**.
   l'inquadratura completa in 16:9.
 - **Marquee doppi** in direzioni opposte (uno pieno, uno outline inclinato).
 - **Manifesto**: testo che si "accende" parola per parola allo scroll.
-- **★ Materiali a scorrimento orizzontale** (pinned anche su mobile, guidato dallo scroll verticale e trascinabile).
+- **★ Materiali a scorrimento orizzontale**: pinned su desktop; su mobile avanzano lentamente in automatico, in ciclo continuo, e restano trascinabili in entrambe le direzioni senza interferire con lo scroll verticale.
 - **Prodotti CAM**: fotografia in parallax e sigillo del contenuto riciclato animato.
 - **Transizione BTZ → GPL**: flusso luminoso animato.
 - **Recupero**: ciclo circolare che ruota allo scroll e sequenza di apparizione dei passaggi.

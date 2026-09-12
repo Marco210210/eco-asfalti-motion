@@ -3,6 +3,8 @@ import { motion, useMotionValue, useMotionValueEvent, useScroll, useReducedMotio
 
 const POINTER_DRAG_GAIN = 1.75
 const TOUCHPAD_GAIN = 3.4
+const MOBILE_AUTO_SPEED = 10
+const MOBILE_RESUME_DELAY = 6500
 const MATERIAL_IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
 
 const MATERIALS_UNSORTED = [
@@ -45,7 +47,7 @@ const MATERIALS_UNSORTED = [
 
 const MATERIALS = [MATERIALS_UNSORTED[4], MATERIALS_UNSORTED[5], ...MATERIALS_UNSORTED.slice(0, 4)].map((item, index) => ({ ...item, index: String(index + 1).padStart(2, '0') }))
 
-function Card({ item, isActive, onActivate, onDeactivate }) {
+function Card({ item, isActive, onActivate, onDeactivate, duplicate = false }) {
   const reduce = useReducedMotion()
 
   return (
@@ -59,6 +61,7 @@ function Card({ item, isActive, onActivate, onDeactivate }) {
       onBlur={event => {
         if (!event.currentTarget.contains(event.relatedTarget)) onDeactivate()
       }}
+      aria-hidden={duplicate ? 'true' : undefined}
     >
       <div className="h-card-media">
         <img
@@ -84,7 +87,7 @@ function Card({ item, isActive, onActivate, onDeactivate }) {
           </ul>
         )}
         <p className="technical-request">
-          {item.certificate ? <a href={`${import.meta.env.BASE_URL}certificazioni/remade.pdf`} target="_blank" rel="noreferrer">Apri il certificato ReMade (PDF) ↗</a> : <a href="#contatti">Richiedi informazioni sul prodotto ↗</a>}
+          {item.certificate ? <a href={`${import.meta.env.BASE_URL}certificazioni/remade.pdf`} target="_blank" rel="noreferrer" tabIndex={duplicate ? -1 : undefined}>Apri il certificato ReMade (PDF) ↗</a> : <a href="#contatti" tabIndex={duplicate ? -1 : undefined}>Richiedi informazioni sul prodotto ↗</a>}
         </p>
       </div>
     </motion.article>
@@ -116,6 +119,7 @@ export default function MaterialiScroll() {
     let closestIndex = 0
     let closestDistance = Number.POSITIVE_INFINITY
     cards.forEach((card, index) => {
+      if (card.offsetWidth === 0) return
       const cardCenter = track.offsetLeft + card.offsetLeft + card.offsetWidth / 2 + motionX
       const distance = Math.abs(cardCenter - viewportCenter)
       if (distance < closestDistance) {
@@ -178,10 +182,17 @@ export default function MaterialiScroll() {
     const measure = () => {
       if (!active) return
 
+      if (!desktopQuery.matches) {
+        setHorizontalTravel(0)
+        setSectionHeight(null)
+        trackX.set(0)
+        return
+      }
+
       const viewportWidth = document.documentElement.clientWidth
       const travel = Math.max(0, Math.ceil(track.scrollWidth - viewportWidth))
       setHorizontalTravel(travel)
-      setSectionHeight(Math.ceil(window.innerHeight + travel * (desktopQuery.matches ? 1.25 : 1.08)))
+      setSectionHeight(Math.ceil(window.innerHeight + travel * 1.25))
       window.requestAnimationFrame(() => updateActiveCard())
     }
 
@@ -200,6 +211,97 @@ export default function MaterialiScroll() {
       desktopQuery.removeEventListener('change', measure)
     }
   }, [updateActiveCard])
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track || reduce) return undefined
+
+    const mobileQuery = window.matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)')
+    let animationFrame = 0
+    let lastTime = 0
+    let loopWidth = 0
+    let initialized = false
+    let isVisible = false
+    let isInteracting = false
+    let resumeAt = 0
+    let autoPosition = 0
+
+    const measureLoop = () => {
+      if (!mobileQuery.matches) return
+      const firstCard = track.querySelector('.h-card:not(.h-card-loop-copy)')
+      const firstCopy = track.querySelector('[data-loop-copy="1"] .h-card')
+      if (!firstCard || !firstCopy) return
+      loopWidth = firstCopy.offsetLeft - firstCard.offsetLeft
+      if (!initialized && loopWidth > 0) {
+        initialized = true
+        track.scrollLeft = loopWidth
+        autoPosition = loopWidth
+        updateActiveCard(-track.scrollLeft)
+      }
+    }
+
+    const normalizeLoop = () => {
+      if (!loopWidth) return
+      if (autoPosition >= loopWidth * 2) autoPosition -= loopWidth
+      if (autoPosition <= 1) autoPosition += loopWidth
+      track.scrollLeft = autoPosition
+    }
+
+    const pauseForInteraction = () => {
+      isInteracting = true
+      resumeAt = Number.POSITIVE_INFINITY
+      autoPosition = track.scrollLeft
+    }
+    const resumeAfterInteraction = () => {
+      isInteracting = false
+      resumeAt = performance.now() + MOBILE_RESUME_DELAY
+      autoPosition = track.scrollLeft
+    }
+    const syncManualPosition = () => {
+      if (isInteracting) autoPosition = track.scrollLeft
+    }
+
+    const tick = time => {
+      const elapsed = lastTime ? Math.min(time - lastTime, 40) : 0
+      lastTime = time
+      if (mobileQuery.matches && isVisible && !isInteracting && time >= resumeAt && loopWidth) {
+        autoPosition += MOBILE_AUTO_SPEED * elapsed / 1000
+        track.scrollLeft = autoPosition
+        normalizeLoop()
+      }
+      animationFrame = window.requestAnimationFrame(tick)
+    }
+
+    const visibilityObserver = new IntersectionObserver(entries => {
+      isVisible = entries[0]?.isIntersecting ?? false
+      lastTime = 0
+    }, { threshold: 0.15 })
+    const resizeObserver = new ResizeObserver(measureLoop)
+
+    measureLoop()
+    document.fonts?.ready.then(measureLoop)
+    visibilityObserver.observe(track)
+    resizeObserver.observe(track)
+    mobileQuery.addEventListener('change', measureLoop)
+    track.addEventListener('pointerdown', pauseForInteraction, { passive: true })
+    track.addEventListener('pointerup', resumeAfterInteraction, { passive: true })
+    track.addEventListener('pointercancel', resumeAfterInteraction, { passive: true })
+    track.addEventListener('wheel', resumeAfterInteraction, { passive: true })
+    track.addEventListener('scroll', syncManualPosition, { passive: true })
+    animationFrame = window.requestAnimationFrame(tick)
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame)
+      visibilityObserver.disconnect()
+      resizeObserver.disconnect()
+      mobileQuery.removeEventListener('change', measureLoop)
+      track.removeEventListener('pointerdown', pauseForInteraction)
+      track.removeEventListener('pointerup', resumeAfterInteraction)
+      track.removeEventListener('pointercancel', resumeAfterInteraction)
+      track.removeEventListener('wheel', resumeAfterInteraction)
+      track.removeEventListener('scroll', syncManualPosition)
+    }
+  }, [reduce, updateActiveCard])
 
   useEffect(() => {
     const track = trackRef.current
@@ -327,6 +429,21 @@ export default function MaterialiScroll() {
     },
   }
 
+  const activeIndex = interactionIndex ?? trackActiveIndex
+  const renderCards = (copy = 0) => MATERIALS.map((material, index) => {
+    const physicalIndex = copy * MATERIALS.length + index
+    return (
+      <Card
+        key={`${copy}-${material.index}`}
+        item={material}
+        duplicate={copy > 0}
+        isActive={activeIndex === physicalIndex}
+        onActivate={() => setInteractionIndex(physicalIndex)}
+        onDeactivate={() => setInteractionIndex(null)}
+      />
+    )
+  })
+
   if (reduce) {
     return (
       <section className="section" id="materiali" ref={ref}>
@@ -336,7 +453,7 @@ export default function MaterialiScroll() {
           <p className="h-scroll-hint">Trascina le card o scorri orizzontalmente</p>
         </div>
         <div ref={trackRef} className="h-track" style={{ overflowX: 'auto', paddingBottom: '1rem' }} onScroll={() => updateActiveCard()} {...trackInteractionProps}>
-          {MATERIALS.map((m, index) => <Card key={m.index} item={m} isActive={(interactionIndex ?? trackActiveIndex) === index} onActivate={() => setInteractionIndex(index)} onDeactivate={() => setInteractionIndex(null)} />)}
+          {renderCards()}
         </div>
       </section>
     )
@@ -353,7 +470,7 @@ export default function MaterialiScroll() {
         <div className="h-scroll-head">
           <span className="eyebrow">La nostra produzione</span>
           <h2 className="section-title">Miscele <span className="out">per ogni</span> esigenza</h2>
-          <p className="h-scroll-hint">Scorri la pagina oppure trascina le card</p>
+          <p className="h-scroll-hint">Trascina le card o scorri in orizzontale</p>
         </div>
         <motion.div
           ref={trackRef}
@@ -361,7 +478,9 @@ export default function MaterialiScroll() {
           style={{ x: trackX }}
           {...trackInteractionProps}
         >
-          {MATERIALS.map((m, index) => <Card key={m.index} item={m} isActive={(interactionIndex ?? trackActiveIndex) === index} onActivate={() => setInteractionIndex(index)} onDeactivate={() => setInteractionIndex(null)} />)}
+          {renderCards()}
+          <div className="h-card-loop-copy" data-loop-copy="1">{renderCards(1)}</div>
+          <div className="h-card-loop-copy" data-loop-copy="2">{renderCards(2)}</div>
         </motion.div>
       </div>
     </section>
