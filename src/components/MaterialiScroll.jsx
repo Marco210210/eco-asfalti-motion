@@ -5,7 +5,6 @@ const POINTER_DRAG_GAIN = 1.75
 const TOUCHPAD_GAIN = 3.4
 const MOBILE_CARD_INTERVAL = 4500
 const MOBILE_CARD_TRANSITION = 700
-const MOBILE_RESUME_DELAY = 1800
 const MATERIAL_IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
 
 const MATERIALS_UNSORTED = [
@@ -224,6 +223,8 @@ export default function MaterialiScroll() {
     let initialized = false
     let isVisible = false
     let isInteracting = false
+    let interactionStartLeft = 0
+    let manualScrollPending = false
 
     const clearAdvance = () => window.clearTimeout(advanceTimer)
 
@@ -295,16 +296,26 @@ export default function MaterialiScroll() {
 
     const pauseForInteraction = () => {
       isInteracting = true
+      interactionStartLeft = track.scrollLeft
+      manualScrollPending = false
       clearAdvance()
       window.clearTimeout(settleTimer)
+      track.scrollTo({ left: track.scrollLeft, behavior: 'auto' })
     }
     const resumeAfterInteraction = () => {
       isInteracting = false
+      manualScrollPending = Math.abs(track.scrollLeft - interactionStartLeft) > 2
       normalizeLoop()
-      scheduleAdvance(MOBILE_RESUME_DELAY)
+      scheduleAdvance(MOBILE_CARD_INTERVAL)
     }
     const syncActiveCard = () => {
       if (mobileQuery.matches) updateActiveCard(-track.scrollLeft)
+    }
+    const restartAfterManualScroll = () => {
+      if (!manualScrollPending || isInteracting) return
+      manualScrollPending = false
+      normalizeLoop()
+      scheduleAdvance(MOBILE_CARD_INTERVAL)
     }
 
     const visibilityObserver = new IntersectionObserver(entries => {
@@ -324,6 +335,7 @@ export default function MaterialiScroll() {
     track.addEventListener('pointercancel', resumeAfterInteraction, { passive: true })
     track.addEventListener('wheel', resumeAfterInteraction, { passive: true })
     track.addEventListener('scroll', syncActiveCard, { passive: true })
+    track.addEventListener('scrollend', restartAfterManualScroll, { passive: true })
 
     return () => {
       clearAdvance()
@@ -336,6 +348,7 @@ export default function MaterialiScroll() {
       track.removeEventListener('pointercancel', resumeAfterInteraction)
       track.removeEventListener('wheel', resumeAfterInteraction)
       track.removeEventListener('scroll', syncActiveCard)
+      track.removeEventListener('scrollend', restartAfterManualScroll)
     }
   }, [reduce, updateActiveCard])
 
