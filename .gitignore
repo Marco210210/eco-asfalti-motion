@@ -6,8 +6,6 @@ dist/
 .DS_Store
 npm-debug.log*
 
-docs/scroll-world-scenes/raw-clips/
-generate/
 media-masters/
 .tmp_review/
 .tmp-pages-audit/

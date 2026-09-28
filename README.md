@@ -16,7 +16,7 @@ Palette carbone caldo + arancione vivido, tipografia **Syne + Inter**.
 - **Marquee doppi** in direzioni opposte (uno pieno, uno outline inclinato).
 - **Manifesto**: testo che si "accende" parola per parola allo scroll.
 - **★ Materiali a scorrimento orizzontale**: pinned su desktop; su mobile avanzano di una card alla volta, in ciclo continuo, e restano trascinabili in entrambe le direzioni senza interferire con lo scroll verticale. Il tocco mette in pausa il movimento e ogni gesto manuale fa ripartire da zero il tempo di lettura.
-- **Prodotti CAM**: fotografia in parallax e sigillo del contenuto riciclato animato.
+- **Prodotti CAM**: fotografia in parallax e collegamento al certificato ReMade.
 - **Transizione BTZ → GPL**: flusso luminoso animato.
 - **Recupero**: ciclo circolare che ruota allo scroll e sequenza di apparizione dei passaggi.
 - **★ "La materia prende strada"**: la finitrice stende l'asfalto mentre scrolli, nel capitolo pavimentazioni.
@@ -55,8 +55,7 @@ le scene animate originali restano in `src/styles.css`.
 
 ## Filmato della hero
 
-`HeroFilm.jsx` seleziona un unico MP4 quando serve: 1080p per desktop (circa
-5,3 MB), 720p fino a 900 px (circa 3,5 MB). Non viene precaricato alcun video
+`HeroFilm.jsx` utilizza `public/videos/eco-asfalti-logo-naturale-v2-hq.mp4` su desktop e mobile (2560 × 1440, 24 fps, 10 secondi). La versione approvata con logo è stata migliorata con riduzione leggera del rumore, ridimensionamento Lanczos e nitidezza controllata, senza generazione di dettagli o cambiamenti alle scene. Non viene precaricato alcun video
 finché l'inquadratura non è visibile, con animazioni ridotte, con
 risparmio dati o connessioni 2G rilevate. Il comando di riproduzione permette
 comunque di avviarlo esplicitamente. L'immagine iniziale è la foto originale
@@ -77,28 +76,18 @@ un nuovo tentativo manuale.
 La precedente sezione video allo scroll e il preloader sono stati rimossi,
 insieme ai relativi asset e alle anteprime non più utilizzate.
 
-Per rigenerare gli asset, con FFmpeg installato:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-hero-media.ps1
-```
-
-Il comando legge `media-masters/Soggetto_e_pitch_una_fr_gwr_video_mvp.mp4` senza modificarlo
-e produce i file web in `public/videos`, più un master a
-2560×1440 in `media-masters/ciclo-produttivo-1440p.mp4` (escluso da Git e dalla
-build web). Il sorgente è 720p: il ridimensionamento Lanczos con lieve
-nitidezza è convenzionale, senza AI, watermark o nuovi dettagli ricostruiti.
-Durata di 10 secondi e 24 fps sono conservati; la traccia audio viene esclusa.
+Il video originale è conservato in `media-masters/Soggetto_e_pitch_una_fr_gwr_video_mvp.mp4`.
+La versione con logo prima del miglioramento è conservata in `media-masters/eco-asfalti-logo-naturale-v2.mp4`. Il video finale è mantenuto solo in `public/videos/eco-asfalti-logo-naturale-v2-hq.mp4`; `dist` ne riceve una copia durante la build. La traccia audio del file finale resta intatta, ma il sito riproduce il video in modalità silenziosa.
+Le vecchie esportazioni, prove, fotogrammi, strumenti di compositing e istruzioni delle scene video sono stati rimossi dal progetto (spostati nel Cestino). Per cambiare il video, sostituire il file finale e aggiornare il riferimento in `HeroFilm.jsx` se cambia nome.
 
 ## Documenti e fonti dei contenuti
 
-- Gli 11 PDF in `public/certificazioni/` sono copie dei documenti ricevuti in
+- I 13 PDF in `public/certificazioni/` sono copie dei documenti ricevuti in
   `DOCUMENTAZIONE_RICEVUTA`, con nomi pubblici brevi. Aggiornare anche numeri e
   validità in `src/components/Certificazioni.jsx` quando si sostituiscono i PDF.
-- Il 16–45% di contenuto riciclato e le otto miscele derivano dal certificato
-  ReMade 1591/001. Il PDF include l'allegato con le percentuali per prodotto.
-- Il Rating di Legalità rimanda al registro pubblico AGCM. Nei documenti ricevuti
-  non è presente un attestato specifico: non sono pubblicati punteggi o scadenze.
+- Le percentuali di riciclato e la FAQ quantitativa sono state rimosse su richiesta del cliente, anche dai metadati e dal JSON-LD. Non reintrodurle senza conferma. Il certificato originale ReMade resta consultabile, senza modifiche al documento.
+- Il Rating di Legalità apre direttamente `rating-legalita-agcm.pdf`, copia della comunicazione ricevuta in `DOCUMENTAZIONE_RICEVUTA/Nuovi`.
+- Il modello 231 è pubblicato integralmente su autorizzazione esplicita del cliente; solo l’AUA resta fuori da `public` e dalla build in attesa di decisione sui dati personali. Dettagli in [docs/verifica-documenti.md](docs/verifica-documenti.md).
 - Il passaggio BTZ → GPL e il lavoro in corso con ANAS da 20 milioni di euro
   provengono dalle direttive del cliente. Non sono stati aggiunti località,
   CIG, quote di partecipazione o dettagli contrattuali non forniti.

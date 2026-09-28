@@ -41,11 +41,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .material-image-caption { position: absolute; bottom: 0.7rem; left: 0.8rem; max-width: calc(100% - 1.6rem); padding: 0.35rem 0.55rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; background: rgba(15,19,18,0.85); color: #fff; font-size: 0.62rem; line-height: 1.3; letter-spacing: 0.04em; pointer-events: none; }
 .cam-image-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8,16,10,0.8), transparent 60%); pointer-events: none; }
 .cam-image-caption { position: absolute; z-index: 1; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; color: #fff; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
-.recycled-seal { position: absolute; z-index: 1; top: 1.5rem; right: 1.5rem; width: 160px; aspect-ratio: 1; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #172017; color: #b7df74; box-shadow: 0 10px 60px #0005; }
-.recycled-seal::before { content: ''; position: absolute; inset: 7px; border: 1px dashed #b7df7480; border-radius: 50%; animation: sealRotate 40s linear infinite; }
-.recycled-seal > span { font-size: 0.61rem; letter-spacing: 0.08em; }
-.recycled-seal strong { font-family: 'Syne', sans-serif; font-size: 3.3rem; line-height: 1.1; }
-.recycled-seal small { font-size: 1.4rem; }
 @keyframes sealRotate { to { transform: rotate(360deg); } }
 .eco-pill { display: inline-flex; gap: 0.6rem; align-items: center; padding: 0.5rem 0.8rem; border: 1px solid var(--eco); color: var(--eco); border-radius: 100px; font-size: 0.7rem; font-weight: 700; }
 .cam-copy h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin: 1.5rem 0; line-height: 1.16; }
@@ -163,9 +158,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   .hero-proof { gap: 0.6rem 1rem; font-size: 0.63rem; }
   .hero-scroll { display: none; }
   .cam-image-wrap { height: 360px; }
-  .recycled-seal { width: 130px; top: 1rem; right: 1rem; }
-  .recycled-seal strong { font-size: 2.8rem; }
-  .recycled-seal > span { font-size: 0.52rem; }
   .cam-image-caption { left: 1rem; bottom: 1rem; font-size: 0.57rem; }
   .cam-copy h3 { font-size: 1.8rem; }
   .energy-transition { grid-template-columns: 1fr; gap: 1.7rem; padding: 1.4rem; margin-top: 2.5rem; }
@@ -186,6 +178,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   .plant-gallery-grid .plant-shot { grid-column: 1 / -1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-material-flow span, .recycled-seal::before, .energy-line i { animation: none; }
+  .hero-material-flow span, .energy-line i { animation: none; }
   .chapter-link.is-active, .chapter-link.is-active .chapter-link-top > :last-child { transform: none; }
 }

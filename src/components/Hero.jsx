@@ -36,7 +36,7 @@ export default function Hero() {
           <Magnetic><a href="#produzione" className="btn btn-primary">Scopri la produzione ↗</a></Magnetic>
           <Magnetic><a href="#contatti" className="btn btn-ghost">Richiedi una fornitura</a></Magnetic>
         </div>
-        <div className="hero-proof"><span>Prodotti CAM</span><span>ReMade®</span><span>Fino al 45% di riciclato</span></div>
+        <div className="hero-proof"><span>Prodotti CAM</span><span>ReMade®</span><span>Recupero della materia</span></div>
       </div>
 
       <div className="hero-badge" aria-hidden="true">

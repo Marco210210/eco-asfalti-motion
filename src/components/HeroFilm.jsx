@@ -52,8 +52,7 @@ export default function HeroFilm() {
     updateStatus('loading')
     if (!video.getAttribute('src') || video.error) {
       // Keep the source attached offscreen to preserve time and buffered data.
-      const mobile = window.matchMedia('(max-width: 900px)').matches
-      video.src = `${BASE}videos/ciclo-hero-${mobile ? '720' : '1080'}.mp4`
+      video.src = `${BASE}videos/eco-asfalti-logo-naturale-v2-hq.mp4`
       video.load()
     } else if (video.ended) {
       video.currentTime = 0

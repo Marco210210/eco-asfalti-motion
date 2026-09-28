@@ -20,13 +20,12 @@ export default function Produzione() {
           <Reveal className="cam-image-wrap">
             <motion.img src={`${import.meta.env.BASE_URL}images/impianto-01.webp`} alt="Foto reale delle aree di stoccaggio dell’impianto Eco Asfalti a Nocera Superiore" width="2200" height="1238" loading="lazy" style={reduce ? undefined : { y: imageY }} />
             <span className="cam-image-caption">Il nostro impianto / Nocera Superiore</span>
-            <div className="recycled-seal"><span>fino al</span><strong>45<small>%</small></strong><span>riciclato certificato</span></div>
           </Reveal>
           <Reveal className="cam-copy" delay={0.12}>
             <span className="eco-pill"><span aria-hidden="true">↗</span> Prodotti ecologici</span>
             <h3>Più valore alla materia.<br /><em>Meno risorse vergini.</em></h3>
             <p>Le nostre miscele per i CAM Strade portano le materie prime secondarie dentro la produzione di nuovi conglomerati bituminosi.</p>
-            <p>Il contenuto riciclato delle otto miscele ReMade® è certificato dal 16% al 45%: un dato concreto, dichiarato per ogni prodotto e consultabile nel certificato.</p>
+            <p>La documentazione ReMade® è consultabile nella sezione Certificazioni. Per le caratteristiche della miscela adatta al tuo progetto, contatta il nostro ufficio tecnico.</p>
             <div className="cam-tags"><span>Materiali CAM</span><span>ReMade®</span><span>Economia circolare</span></div>
             <Magnetic><a className="text-link" href={`${import.meta.env.BASE_URL}certificazioni/remade.pdf`} target="_blank" rel="noreferrer">Consulta il certificato ReMade <span aria-hidden="true">↗</span><span className="sr-only"> (PDF, nuova scheda)</span></a></Magnetic>
           </Reveal>

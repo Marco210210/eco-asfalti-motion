@@ -15,20 +15,7 @@ I prompt finali sono in [materials-image-prompts.json](materials-image-prompts.j
 
 Le sei schede del sito non corrispondono a sei ricette: quattro presentano famiglie di conglomerati, due mettono in evidenza i CAM e la certificazione ReMade. I requisiti ambientali possono riguardare diverse famiglie.
 
-L'allegato al certificato ReMade 1591/001, revisione 0 del 02/04/2026 (`public/certificazioni/remade.pdf`, pagina 2), elenca:
-
-| Miscela | Contenuto riciclato |
-| --- | --- |
-| CB BASE TQ | 40% |
-| CB BASE HD | 40% |
-| CB BASEBINDER HD | 16% |
-| CB BINDER TQ | 36% |
-| CB BINDER HD M | 36% |
-| CB USURA A HD M | 45% |
-| CB USURA B HD | 45% |
-| CB USURA TQ | 27% |
-
-BASEBINDER è ora citato nella scheda base. L'allegato non elenca drenante o SMA: non attribuire automaticamente a questi prodotti le percentuali o la certificazione ReMade delle otto miscele sopra. L'allegato non dimostra che il catalogo aziendale completo sia limitato a otto ricette.
+Su richiesta del cliente, non riportare percentuali di riciclato o il numero di miscele certificate nei testi del sito. Per il campo di applicazione rimandare al PDF ReMade originale, senza estendere la certificazione ad altre famiglie di prodotto. Le precedenti interpretazioni quantitative sono state ritirate.
 
 ## Appunti della visita all'impianto
 

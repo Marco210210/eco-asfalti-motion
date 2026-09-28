@@ -17,10 +17,11 @@ const FACILITIES = [
     desc: "Quantitativo massimo annuo autorizzato per il recupero di conglomerato bituminoso in procedura semplificata.",
   },
   {
-    label: 'Contenuto riciclato certificato',
-    code: '45%',
-    title: 'Prodotti ReMade',
-    desc: 'Le miscele certificate raggiungono fino al 45% di materiale riciclato, con percentuali dichiarate per ciascun prodotto.',
+    label: 'Qualificazione lavori pubblici',
+    code: 'OG 3',
+    title: 'Attestazione SOA · Classifica II',
+    desc: 'Qualificazione per strade, autostrade, ponti, viadotti e relative opere complementari.',
+    file: 'soa-og3.pdf',
   },
   {
     label: 'Sostenibilità ESG-LABEX',
@@ -28,6 +29,7 @@ const FACILITIES = [
     unit: 'SDGs',
     title: 'Rating AAA/AAA−',
     desc: 'Score ESG pari a 80 e tredici Obiettivi di Sviluppo Sostenibile raggiunti secondo la certificazione ESG-LABEX.',
+    file: 'esg-labex.pdf',
   },
 ]
 
@@ -42,6 +44,7 @@ function FacilityCard({ facility, delay }) {
       <div className="facility-copy">
         <h3>{facility.title}</h3>
         <p>{facility.desc}</p>
+        {facility.file && <a className="text-link" href={`${import.meta.env.BASE_URL}certificazioni/${facility.file}`} target="_blank" rel="noreferrer">Apri il documento <span aria-hidden="true">↗</span><span className="sr-only"> (PDF, nuova scheda)</span></a>}
       </div>
     </Reveal>
   )

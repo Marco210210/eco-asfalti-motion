@@ -40,7 +40,7 @@ const MATERIALS_UNSORTED = [
     className: 'remade-card',
     title: 'Conglomerati certificati ReMade',
     tag: 'Cert. 1591/001',
-    desc: 'Otto miscele con contenuto riciclato certificato dal 16% al 45%. Le percentuali di ogni prodotto sono consultabili nel certificato ReMade®.',
+    desc: 'Consulta il certificato ReMade® e contattaci per le caratteristiche tecniche delle miscele disponibili per il tuo progetto.',
     certificate: true,
   },
 ]
