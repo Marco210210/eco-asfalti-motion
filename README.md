@@ -55,7 +55,7 @@ le scene animate originali restano in `src/styles.css`.
 
 ## Filmato della hero
 
-`HeroFilm.jsx` utilizza `public/videos/eco-asfalti-logo-naturale-v2-hq.mp4` su desktop e mobile (2560 × 1440, 24 fps, 10 secondi). La versione approvata con logo è stata migliorata con riduzione leggera del rumore, ridimensionamento Lanczos e nitidezza controllata, senza generazione di dettagli o cambiamenti alle scene. Non viene precaricato alcun video
+`HeroFilm.jsx` utilizza `public/videos/eco-asfalti-ai-1440p.mp4` su desktop e mobile (2560 × 1440, 24 fps, 10 secondi). La versione approvata è stata migliorata localmente con Real-ESRGAN general-x4v3 e ridimensionata a 1440p. Il risultato combina 85% AI e 15% sorgente; le aree del logo sono protette con maschere ricavate dal confronto con il filmato originale. Durata, sequenza e 240 fotogrammi restano invariati. Non viene precaricato alcun video
 finché l'inquadratura non è visibile, con animazioni ridotte, con
 risparmio dati o connessioni 2G rilevate. Il comando di riproduzione permette
 comunque di avviarlo esplicitamente. L'immagine iniziale è la foto originale
@@ -77,7 +77,7 @@ La precedente sezione video allo scroll e il preloader sono stati rimossi,
 insieme ai relativi asset e alle anteprime non più utilizzate.
 
 Il video originale è conservato in `media-masters/Soggetto_e_pitch_una_fr_gwr_video_mvp.mp4`.
-La versione con logo prima del miglioramento è conservata in `media-masters/eco-asfalti-logo-naturale-v2.mp4`. Il video finale è mantenuto solo in `public/videos/eco-asfalti-logo-naturale-v2-hq.mp4`; `dist` ne riceve una copia durante la build. La traccia audio del file finale resta intatta, ma il sito riproduce il video in modalità silenziosa.
+La versione con logo prima del miglioramento è conservata in `media-masters/eco-asfalti-logo-naturale-v2.mp4`. La prova AI e il confronto sono archiviati localmente in `media-masters/ai-preview/`. La precedente versione HQ resta in `media-masters/eco-asfalti-logo-naturale-v2-hq.mp4`. Il video pubblicato è in `public/videos/eco-asfalti-ai-1440p.mp4`; `dist` ne riceve una copia durante la build. La traccia audio del file finale resta intatta, ma il sito riproduce il video in modalità silenziosa.
 Le vecchie esportazioni, prove, fotogrammi, strumenti di compositing e istruzioni delle scene video sono stati rimossi dal progetto (spostati nel Cestino). Per cambiare il video, sostituire il file finale e aggiornare il riferimento in `HeroFilm.jsx` se cambia nome.
 
 ## Documenti e fonti dei contenuti
