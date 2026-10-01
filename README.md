@@ -1,5 +1,13 @@
 # Eco Asfalti SRL — Motion Edition (animation-maxed)
 
+## Pubblicazione e form
+
+Il dominio definitivo è **https://www.ecoasfaltisrl.it/**, su hosting Aruba.
+Istruzioni in [docs/pubblicazione-aruba.md](docs/pubblicazione-aruba.md).
+Il form PHP usa SMTP autenticato della casella aziendale tramite PHPMailer
+incluso sul sito; le credenziali sono in `api/private`, protetta da accessi HTTP.
+L'invio reale richiede la configurazione sul server e una prova di ricezione.
+
 La variante **più dinamica e ricca di animazioni**. Vite + React + Framer Motion.
 Palette carbone caldo + arancione vivido, tipografia **Syne + Inter**.
 
@@ -86,7 +94,7 @@ Le vecchie esportazioni, prove, fotogrammi, strumenti di compositing e istruzion
   `DOCUMENTAZIONE_RICEVUTA`, con nomi pubblici brevi. Aggiornare anche numeri e
   validità in `src/components/Certificazioni.jsx` quando si sostituiscono i PDF.
 - Le percentuali di riciclato e la FAQ quantitativa sono state rimosse su richiesta del cliente, anche dai metadati e dal JSON-LD. Non reintrodurle senza conferma. Il certificato originale ReMade resta consultabile, senza modifiche al documento.
-- Il Rating di Legalità apre direttamente `rating-legalita-agcm.pdf`, copia della comunicazione ricevuta in `DOCUMENTAZIONE_RICEVUTA/Nuovi`.
+- Il Rating di Legalità apre direttamente `rating-legalita-agcm.pdf`, copia della comunicazione ricevuta in `DOCUMENTAZIONE_RICEVUTA/CERTIFICAZIONI`.
 - Il modello 231 è pubblicato integralmente su autorizzazione esplicita del cliente; solo l’AUA resta fuori da `public` e dalla build in attesa di decisione sui dati personali. Dettagli in [docs/verifica-documenti.md](docs/verifica-documenti.md).
 - Il passaggio BTZ → GPL e il lavoro in corso con ANAS da 20 milioni di euro
   provengono dalle direttive del cliente. Non sono stati aggiunti località,

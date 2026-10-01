@@ -61,7 +61,7 @@ export default function Contatti() {
               <span className="contact-value">Via Alveo Santa Croce 46, 84015 Nocera Superiore (SA)</span>
               <a className="directions-link" href={directionsUrl} target="_blank" rel="noreferrer">Ottieni indicazioni stradali <span aria-hidden="true">↗</span></a>
             </li>
-            <li><span className="contact-label">Email</span><a className="contact-value" href="mailto:info@ecoasfalti.it">info@ecoasfalti.it</a></li>
+            <li><span className="contact-label">Email</span><a className="contact-value" href="mailto:info@ecoasfaltisrl.it">info@ecoasfaltisrl.it</a></li>
             <li><span className="contact-label">C.F. / P. IVA</span><span className="contact-value">06052780654</span></li>
             <li><span className="contact-label">Registro Imprese</span><span className="contact-value">REA SA-493642</span></li>
           </ul>

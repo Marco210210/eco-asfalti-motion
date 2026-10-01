@@ -156,12 +156,10 @@ if (rate_limit_exceeded($clientKey)) {
     respond(429, false, 'Hai effettuato troppi tentativi. Riprova tra qualche minuto.');
 }
 
-$recipient = 'info@ecoasfalti.it';
 $subjectText = 'Nuova richiesta dal sito Eco Asfalti';
-$subject = '=?UTF-8?B?' . base64_encode($subjectText) . '?=';
 $safePhone = $phone !== '' ? $phone : 'Non indicato';
 $body = implode("\r\n", [
-    'Nuova richiesta ricevuta dal sito ecoasfalti.it',
+    'Nuova richiesta ricevuta dal sito ecoasfaltisrl.it',
     '',
     'Nome e cognome: ' . $name,
     'Email: ' . $email,
@@ -173,18 +171,56 @@ $body = implode("\r\n", [
     '',
     'Data invio: ' . date('d/m/Y H:i:s'),
 ]);
-$headers = implode("\r\n", [
-    'From: Sito Eco Asfalti <info@ecoasfalti.it>',
-    'Reply-To: ' . $email,
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: 8bit',
-    'X-Mailer: PHP/' . PHP_VERSION,
-]);
+// Aruba shared hosting: configuration in a directory denied to HTTP clients.
+$configPath = __DIR__ . '/private/contact-config.php';
+try {
+    if (!is_file($configPath)) {
+        throw new RuntimeException('SMTP configuration missing.');
+    }
+    define('ECOASFALTI_CONTACT_CONFIG', true);
+    $config = require $configPath;
+    if (!is_array($config)) {
+        throw new RuntimeException('Invalid SMTP configuration.');
+    }
+    foreach (['host', 'username', 'password', 'from', 'recipient'] as $key) {
+        if (!isset($config[$key]) || !is_string($config[$key]) || trim($config[$key]) === '') {
+            throw new RuntimeException('Incomplete SMTP configuration.');
+        }
+    }
+    if ($config['password'] === 'INSERISCI_QUI_LA_PASSWORD') {
+        throw new RuntimeException('SMTP password not configured.');
+    }
+    $encryption = $config['encryption'] ?? 'ssl';
+    $port = $config['port'] ?? 465;
+    if (!in_array($encryption, ['ssl', 'tls'], true) || !is_int($port) || $port < 1 || $port > 65535) {
+        throw new RuntimeException('Invalid SMTP transport configuration.');
+    }
 
-if (!@mail($recipient, $subject, $body, $headers)) {
-    error_log('Eco Asfalti contact form: mail() returned false.');
-    respond(500, false, 'Invio non riuscito. Riprova tra poco o scrivi a info@ecoasfalti.it.');
+    require_once __DIR__ . '/lib/phpmailer/Exception.php';
+    require_once __DIR__ . '/lib/phpmailer/PHPMailer.php';
+    require_once __DIR__ . '/lib/phpmailer/SMTP.php';
+
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host = $config['host'];
+    $mail->SMTPAuth = true;
+    $mail->Username = $config['username'];
+    $mail->Password = $config['password'];
+    $mail->SMTPSecure = $encryption;
+    $mail->Port = $port;
+    $mail->Timeout = 20;
+    $mail->CharSet = 'UTF-8';
+    $mail->XMailer = '';
+    $mail->setFrom($config['from'], 'Sito Eco Asfalti');
+    $mail->addAddress($config['recipient']);
+    $mail->addReplyTo($email, $name);
+    $mail->Subject = $subjectText;
+    $mail->Body = $body;
+    $mail->send();
+} catch (\Throwable $error) {
+    // Do not expose credentials, SMTP diagnostics or visitor data in responses/logs.
+    error_log('Eco Asfalti contact form: SMTP delivery failed (' . get_class($error) . ').');
+    respond(503, false, 'Invio non riuscito. Riprova tra poco o scrivi a info@ecoasfaltisrl.it.');
 }
 
 success_response('Richiesta inviata correttamente.');

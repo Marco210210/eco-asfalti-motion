@@ -9,3 +9,9 @@ npm-debug.log*
 media-masters/
 .tmp_review/
 .tmp-pages-audit/
+ecoasfalti-private/
+public/api/private/contact-config.php
+release/
+tmp/
+backups/
+/sito_offline_*.tgz
