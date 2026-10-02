@@ -22,7 +22,8 @@ e far confermare al titolare o al suo consulente questi punti:
   dall'hosting; aggiornare l'inventario se cambiano servizi o configurazioni.
 
 Gli strumenti tecnici non richiedono lo stesso consenso dei tracciamenti facoltativi.
-Con GA4 configurato il banner resta bloccante per Analytics finché non si accetta;
+Con GA4 configurato compare un banner non bloccante (X ed Esc = rifiuto, Rifiuta e
+Accetta con pari evidenza, Personalizza per categoria) e Analytics resta spento finché non si accetta;
 con GA4 non configurato non vengono richieste accettazioni prive di oggetto.
 La scelta dura sei mesi ed è modificabile dal footer; scorrimento e navigazione
 non sono usati come consenso. Nessuna pubblicità o marketing dal modulo.

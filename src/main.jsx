@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './cleanAnchors.js'
 import './styles.css'
 import './restructure.css'
 import './components/Hero.css'

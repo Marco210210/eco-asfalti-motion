@@ -10,7 +10,7 @@ if (analytics && !/^G-[A-Z0-9]+$/.test(analytics)) throw new Error('Invalid GA4 
 await build()
 if (!preview) {
   // Render the same React content at build time; no Node server needed on Aruba.
-  const server = await createServer({ mode: 'production', server: { middlewareMode: true }, appType: 'custom' })
+  const server = await createServer({ mode: 'production', server: { middlewareMode: true, watch: null }, appType: 'custom' })
   try {
     const { default: App } = await server.ssrLoadModule('/src/App.jsx')
     const markup = renderToString(React.createElement(App))

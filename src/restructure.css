@@ -4,6 +4,7 @@
 html, body, main { overflow-x: clip; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 section[id], div[id] { scroll-margin-top: 96px; }
+section[id]:focus, div[id]:focus { outline: none; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 5px; }
 .hero { padding-top: 9rem; padding-bottom: 7rem; }
 .hero-title { font-size: clamp(3rem, 8.9vw, 8rem); line-height: 1.02; letter-spacing: -0.055em; }

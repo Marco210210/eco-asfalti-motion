@@ -61,7 +61,7 @@ Fino ad allora i due siti possono competere per le stesse ricerche aziendali.
 Fonti: [profilo e verifica](https://support.google.com/business/answer/7107242?hl=it),
 [visibilità locale](https://support.google.com/business/answer/7091?hl=it).
 
-## 5. Google Analytics 4: dati da fornire
+## 5. Google Analytics 4: configurazione
 
 1. Su https://analytics.google.com creare account/proprietà Eco Asfalti, fuso
    Europe/Rome e valuta EUR. Creare un flusso Web per `https://www.ecoasfaltisrl.it/`.
