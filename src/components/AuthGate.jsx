@@ -5,6 +5,7 @@ const STORAGE_KEY = 'citarella-site-access'
 const ACCESS_DURATION = 24 * 60 * 60 * 1000
 
 function hasValidAccess() {
+  if (typeof localStorage === 'undefined') return false
   const grantedAt = Number(localStorage.getItem(STORAGE_KEY))
   return Number.isFinite(grantedAt) && Date.now() - grantedAt < ACCESS_DURATION
 }

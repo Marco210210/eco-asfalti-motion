@@ -15,6 +15,12 @@ export default function Contatti() {
     const form = formRef.current
     if (!form || submitting) return
 
+    const messageField = form.elements.namedItem('messaggio')
+    if (messageField.value.trim().length < 10) {
+      messageField.focus()
+      setFeedback({ msg: 'Scrivi un messaggio di almeno 10 caratteri.', ok: false })
+      return
+    }
     if (!form.checkValidity()) {
       form.querySelector(':invalid')?.focus()
       setFeedback({ msg: 'Compila i campi obbligatori per inviare la richiesta.', ok: false })
@@ -98,7 +104,8 @@ export default function Contatti() {
           </div>
           <div className="field">
             <label htmlFor="messaggio">Di quale fornitura o servizio hai bisogno? <span className="req" aria-hidden="true">*</span></label>
-            <textarea id="messaggio" name="messaggio" rows="4" placeholder="Indica materiale, quantità indicative e luogo di consegna, oppure descrivi la tua richiesta." minLength="10" maxLength="5000" required></textarea>
+            <textarea id="messaggio" name="messaggio" rows="4" aria-describedby="messaggio-hint" placeholder="Indica materiale, quantità indicative e luogo di consegna, oppure descrivi la tua richiesta." minLength="10" maxLength="5000" required></textarea>
+            <small id="messaggio-hint">Almeno 10 caratteri, massimo 5.000.</small>
           </div>
           <div className="privacy-check">
             <input type="checkbox" id="privacy_acceptance" name="privacy_acceptance" value="1" required />

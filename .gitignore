@@ -13,5 +13,8 @@ ecoasfalti-private/
 public/api/private/contact-config.php
 release/
 tmp/
+test-results/
+playwright-report/
+.tmp-live-home.html
 backups/
 /sito_offline_*.tgz

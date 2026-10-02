@@ -173,6 +173,8 @@ $body = implode("\r\n", [
 ]);
 // Aruba shared hosting: configuration in a directory denied to HTTP clients.
 $configPath = __DIR__ . '/private/contact-config.php';
+$deliveryStage = 'CONFIG';
+$mail = null;
 try {
     if (!is_file($configPath)) {
         throw new RuntimeException('SMTP configuration missing.');
@@ -196,6 +198,7 @@ try {
         throw new RuntimeException('Invalid SMTP transport configuration.');
     }
 
+    $deliveryStage = 'LIBRARY';
     require_once __DIR__ . '/lib/phpmailer/Exception.php';
     require_once __DIR__ . '/lib/phpmailer/PHPMailer.php';
     require_once __DIR__ . '/lib/phpmailer/SMTP.php';
@@ -216,10 +219,31 @@ try {
     $mail->addReplyTo($email, $name);
     $mail->Subject = $subjectText;
     $mail->Body = $body;
-    $mail->send();
+    $deliveryStage = 'PREPARAZIONE';
+    $mail->preSend();
+    $deliveryStage = 'SMTP_CONNECT';
+    $mail->smtpConnect();
+    $deliveryStage = 'SMTP_DELIVERY';
+    $mail->postSend();
 } catch (\Throwable $error) {
-    // Do not expose credentials, SMTP diagnostics or visitor data in responses/logs.
-    error_log('Eco Asfalti contact form: SMTP delivery failed (' . get_class($error) . ').');
+    // Only allowlisted categories: never return raw SMTP responses or credentials.
+    $code = $deliveryStage;
+    if ($mail !== null) {
+        $smtpError = $mail->getSMTPInstance()->getError();
+        $smtpCode = (string) ($smtpError['smtp_code'] ?? '');
+        if ($smtpCode === '535' || stripos($mail->ErrorInfo, 'authenticate') !== false) {
+            $code = 'SMTP_AUTH';
+        } elseif (stripos($mail->ErrorInfo, 'connect') !== false) {
+            $code = 'SMTP_CONNECT';
+        }
+        if (preg_match('/^[45][0-9]{2}$/D', $smtpCode)) {
+            $code .= '_' . $smtpCode;
+        }
+    }
+    if ($error instanceof \Error) {
+        $code .= '_PHP';
+    }
+    error_log('Eco Asfalti contact form: delivery failed [' . $code . '].');
     respond(503, false, 'Invio non riuscito. Riprova tra poco o scrivi a info@ecoasfaltisrl.it.');
 }
 

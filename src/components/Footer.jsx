@@ -14,7 +14,6 @@ export default function Footer() {
   const reduce = useReducedMotion()
   const year = new Date().getFullYear()
   const privacyPage = `${import.meta.env.BASE_URL}privacy-policy.html`
-  const analyticsEnabled = Boolean(import.meta.env.VITE_GA_MEASUREMENT_ID?.trim())
   return (
     <footer className="site-footer">
       <div className="footer-marquee" aria-hidden="true">
@@ -49,9 +48,8 @@ export default function Footer() {
         <span>&copy; {year} Eco Asfalti SRL &middot; P. IVA 06052780654 &middot; REA SA-493642</span>
         <span>
           <a href={privacyPage}>Privacy Policy</a>
-          {analyticsEnabled && (
-            <><span aria-hidden="true"> &middot; </span><button type="button" className="footer-privacy-button" onClick={() => window.dispatchEvent(new Event('ecoasfalti:open-privacy-settings'))}>Preferenze Analytics</button></>
-          )}
+          <span aria-hidden="true"> &middot; </span><a href={`${import.meta.env.BASE_URL}cookie-policy.html`}>Cookie Policy</a>
+          <span aria-hidden="true"> &middot; </span><button type="button" className="footer-privacy-button" onClick={() => window.EcoPrivacy?.open()}>Preferenze cookie</button>
           <span aria-hidden="true"> &middot; </span>Tutti i diritti riservati
         </span>
       </div>

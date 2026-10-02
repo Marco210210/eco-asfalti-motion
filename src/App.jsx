@@ -20,7 +20,6 @@ import Contatti from './components/Contatti.jsx'
 import Footer from './components/Footer.jsx'
 import AuthGate from './components/AuthGate.jsx'
 import MobileStickyCta from './components/MobileStickyCta.jsx'
-import AnalyticsConsent from './components/AnalyticsConsent.jsx'
 
 const MARQUEE_ITEMS = ['Conglomerati bituminosi', 'Prodotti CAM', 'Materie prime secondarie', 'Miscele ReMade®', 'Qualità certificata']
 const ACCESS_GATE_ENABLED = import.meta.env.VITE_ENABLE_ACCESS_GATE === 'true'
@@ -67,7 +66,6 @@ export default function App() {
         <Contatti />
       </main>
       <Footer />
-      <AnalyticsConsent />
     </>
   )
 

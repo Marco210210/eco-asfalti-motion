@@ -1,0 +1,7 @@
+/* The prerendered page stays readable if JavaScript cannot run. */
+#root [style*="opacity"], #root .line > span { opacity: 1 !important; }
+#root [style*="transform"] { transform: none !important; }
+.cursor-dot, .cursor-ring, .scroll-progress, .theme-toggle, .nav-toggle, .footer-privacy-button { display: none !important; }
+.main-nav { display: flex !important; position: static !important; flex-wrap: wrap; }
+.horizontal-section { height: auto !important; }
+.faq-q { list-style: none; }

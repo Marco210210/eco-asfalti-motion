@@ -1,0 +1,8 @@
+.cookie-dialog { box-sizing: border-box; width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; padding: 28px; border: 1px solid #52616b; border-radius: 16px; background: #fff; color: #19252a; font: 16px/1.6 system-ui, sans-serif; box-shadow: 0 20px 90px #0005; }
+.cookie-dialog::backdrop { background: #0008; }
+.cookie-dialog h2 { margin: 0 0 16px; font-size: 24px; color: inherit; }
+.cookie-dialog p { margin: 0 0 16px; }
+.cookie-dialog a { color: #174d62; text-decoration: underline; }
+.cookie-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.cookie-actions button { flex: 1 1 180px; min-height: 48px; border: 2px solid #19252a; border-radius: 8px; background: #19252a; color: #fff; font: inherit; font-weight: 600; cursor: pointer; padding: 10px 16px; }
+.cookie-dialog :focus-visible { outline: 3px solid #d35b00; outline-offset: 4px; }

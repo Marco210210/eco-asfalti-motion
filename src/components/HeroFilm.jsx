@@ -5,7 +5,7 @@ const PHOTO_HOLD_MS = 5000
 const FADE_MS = 850
 
 export default function HeroFilm() {
-  const [reduce, setReduce] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const [reduce, setReduce] = useState(() => typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const reduceRef = useRef(reduce)
   reduceRef.current = reduce
   const pictureRef = useRef(null)
@@ -183,7 +183,7 @@ export default function HeroFilm() {
     <div className={`hero-film${showVideo ? ' is-playing' : ''}`} data-status={status} style={{ '--hero-film-fade': `${FADE_MS}ms` }}>
       <div ref={pictureRef} className="hero-film-picture" aria-hidden="true">
         <picture>
-          <img src={`${BASE}images/impianto-06.webp`} width="2200" height="1238" alt="" fetchPriority="high" />
+          <img src={`${BASE}images/impianto-06.webp`} width="2200" height="1238" alt="" fetchpriority="high" />
         </picture>
         <video
           ref={videoRef} id="hero-film-video" muted playsInline preload="none" tabIndex={-1}

@@ -44,3 +44,8 @@ ul, ol { padding-left: 1.25rem; color: var(--muted); }
 @media (max-width: 520px) {
   .static-actions, .static-button { width: 100%; }
 }
+
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; text-align: left; }
+th, td { padding: 12px; border-bottom: 1px solid #7b858b; vertical-align: top; }
+caption { text-align: left; font-weight: bold; margin-bottom: 12px; }
