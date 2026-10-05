@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import Reveal from './Reveal.jsx'
@@ -18,7 +19,7 @@ export default function Produzione() {
         </Reveal>
         <div className="cam-showcase" id="prodotti-cam">
           <Reveal className="cam-image-wrap">
-            <motion.img src={`${import.meta.env.BASE_URL}images/impianto-01.webp`} alt="Foto reale delle aree di stoccaggio dell’impianto Eco Asfalti a Nocera Superiore" width="2200" height="1238" loading="lazy" style={reduce ? undefined : { y: imageY }} />
+            <motion.img {...responsiveImage(`${import.meta.env.BASE_URL}images/impianto-01.webp`)} alt="Foto reale delle aree di stoccaggio dell’impianto Eco Asfalti a Nocera Superiore" width="2200" height="1238" loading="lazy" style={reduce ? undefined : { y: imageY }} />
             <span className="cam-image-caption">Il nostro impianto / Nocera Superiore</span>
           </Reveal>
           <Reveal className="cam-copy" delay={0.12}>

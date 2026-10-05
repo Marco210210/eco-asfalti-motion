@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const BASE = import.meta.env.BASE_URL
@@ -52,7 +53,7 @@ export default function HeroFilm() {
     updateStatus('loading')
     if (!video.getAttribute('src') || video.error) {
       // Keep the source attached offscreen to preserve time and buffered data.
-      video.src = `${BASE}videos/eco-asfalti-ai-1440p.mp4`
+      video.src = `${BASE}videos/${window.matchMedia('(max-width: 760px)').matches ? 'eco-asfalti-mobile-v2.mp4' : 'eco-asfalti-desktop-v2.mp4'}`
       video.load()
     } else if (video.ended) {
       video.currentTime = 0
@@ -130,7 +131,7 @@ export default function HeroFilm() {
       attemptedRef.current = true
       const connection = navigator.connection
       const conserveData = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType)
-      if (reduceRef.current || conserveData) return
+      if (reduceRef.current || conserveData || window.matchMedia('(max-width: 760px)').matches) return
       intentRef.current = 'auto'
       // Leave the first paint to the photo, text and navigation.
       firstPaint = requestAnimationFrame(resume)
@@ -183,7 +184,7 @@ export default function HeroFilm() {
     <div className={`hero-film${showVideo ? ' is-playing' : ''}`} data-status={status} style={{ '--hero-film-fade': `${FADE_MS}ms` }}>
       <div ref={pictureRef} className="hero-film-picture" aria-hidden="true">
         <picture>
-          <img src={`${BASE}images/impianto-06.webp`} width="2200" height="1238" alt="" fetchpriority="high" />
+          <img {...responsiveImage(`${BASE}images/impianto-06.webp`, "100vw")} width="2200" height="1238" alt="" fetchpriority="high" />
         </picture>
         <video
           ref={videoRef} id="hero-film-video" muted playsInline preload="none" tabIndex={-1}

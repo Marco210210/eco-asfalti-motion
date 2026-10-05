@@ -7,7 +7,7 @@ const ease = [0.16, 1, 0.3, 1]
 
 function MaskLine({ children, delay }) {
   const reduce = useReducedMotion()
-  return <span className="line"><motion.span initial={reduce ? false : { y: '110%' }} animate={{ y: 0 }} transition={{ duration: 0.75, ease, delay }}>{children}</motion.span></span>
+  return <span className="line"><motion.span initial={false} animate={{ y: 0 }} transition={{ duration: 0.75, ease, delay }}>{children}</motion.span></span>
 }
 
 export default function Hero() {

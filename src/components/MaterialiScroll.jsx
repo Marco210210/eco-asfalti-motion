@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useMotionValueEvent, useScroll, useReducedMotion } from 'framer-motion'
 
@@ -65,7 +66,7 @@ function Card({ item, isActive, onActivate, onDeactivate, duplicate = false }) {
     >
       <div className="h-card-media">
         <img
-          src={`${MATERIAL_IMAGE_BASE}${item.image}`}
+          {...responsiveImage(`${MATERIAL_IMAGE_BASE}${item.image}`, "(max-width: 760px) 85vw, 480px")}
           alt={item.alt}
           width={item.illustrative ? 960 : 2200}
           height={item.illustrative ? 640 : 1238}

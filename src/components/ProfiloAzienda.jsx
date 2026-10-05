@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import Reveal from './Reveal.jsx'
 
 const PROFILE_IMAGE = `${import.meta.env.BASE_URL}images/impianto-03.webp`
@@ -16,7 +17,7 @@ export default function ProfiloAzienda() {
         <Reveal className="company-photo-wrap">
           <img
             className="company-photo"
-            src={PROFILE_IMAGE}
+            {...responsiveImage(PROFILE_IMAGE)}
             alt="Vista aerea dell'impianto Eco Asfalti a Nocera Superiore"
             width="2200"
             height="1238"

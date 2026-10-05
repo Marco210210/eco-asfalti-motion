@@ -1,6 +1,39 @@
 import { test, expect } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 
+test('contatti desktop: colonne allineate sopra e sotto', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 })
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Rifiuta facoltativi' }).click()
+  await page.locator('#contatti').scrollIntoViewIfNeeded()
+  const left = await page.locator('.contact-list').boundingBox()
+  const right = await page.locator('.contact-form').boundingBox()
+  expect(Math.abs(left.y - right.y)).toBeLessThan(2)
+  expect(Math.abs(left.y + left.height - right.y - right.height)).toBeLessThan(2)
+  await page.screenshot({ path: 'tmp/audit/contacts-desktop-final.png' })
+})
+
+test('mobile: immagini adattive, video solo al tocco e recapiti chiamabili', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'no-preference' })
+  const page = await context.newPage()
+  const videos = [], missing = []
+  page.on('request', r => { if (r.url().includes('.mp4')) videos.push(r.url()) })
+  page.on('response', r => { if (r.status() === 404) missing.push(r.url()) })
+  await page.goto('http://127.0.0.1:4173/')
+  await expect(page.locator('.hero-film-picture img')).toHaveJSProperty('complete', true)
+  expect(await page.locator('.hero-film-picture img').evaluate(el => el.currentSrc)).toContain('/optimized/')
+  expect(videos).toEqual([])
+  await expect(page.locator('a[href="tel:+390819205409"]')).toHaveText('081 920 5409')
+  await expect(page.locator('a[href="tel:+393486410150"]')).toHaveText('348 641 0150')
+  await page.getByRole('button', { name: 'Rifiuta facoltativi' }).click()
+  await page.getByRole('button', { name: 'Guarda il ciclo' }).click()
+  await expect.poll(() => videos.length).toBeGreaterThan(0)
+  expect(videos.every(url => url.includes('mobile-v2.mp4'))).toBe(true)
+  await expect.poll(() => page.locator('#hero-film-video').evaluate(el => el.readyState)).toBeGreaterThanOrEqual(2)
+  expect(missing).toEqual([])
+  await context.close()
+})
+
 test('messaggio breve spiegato prima di inviare; errore server visibile', async ({ page }) => {
   let sends = 0
   await page.route('**/api/contact.php', route => {

@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import Reveal from './Reveal.jsx'
 
 const IMAGE_BASE = `${import.meta.env.BASE_URL}images/`
@@ -23,7 +24,7 @@ export default function ImpiantoGallery() {
           {PHOTOS.map((photo, index) => (
             <Reveal className={`plant-shot plant-shot-${index + 1}`} key={photo.src} delay={index * 0.04}>
               <figure>
-                <img src={photo.src} alt={photo.alt} width="2200" height="1238" loading="lazy" />
+                <img {...responsiveImage(photo.src)} alt={photo.alt} width="2200" height="1238" loading="lazy" />
                 <figcaption><span>0{index + 1}</span>{photo.label}</figcaption>
               </figure>
             </Reveal>

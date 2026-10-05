@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import Reveal from './Reveal.jsx'
@@ -23,7 +24,7 @@ export default function Recupero() {
         </Reveal>
         <div className="recovery-grid">
           <Reveal className="recovery-visual">
-            <img src={`${import.meta.env.BASE_URL}images/impianto-02.webp`} alt="Vista aerea reale dell’impianto Eco Asfalti e delle aree di deposito" width="2200" height="1238" loading="lazy" />
+            <img {...responsiveImage(`${import.meta.env.BASE_URL}images/impianto-02.webp`)} alt="Vista aerea reale dell’impianto Eco Asfalti e delle aree di deposito" width="2200" height="1238" loading="lazy" />
             <div className="circular-emblem" aria-hidden="true">
               <motion.svg viewBox="0 0 240 240" style={reduce ? undefined : { rotate }}><circle cx="120" cy="120" r="108" /><path d="M120 12a108 108 0 0 1 108 108M120 228A108 108 0 0 1 12 120" /><path d="m214 104 14 16 10-20M26 136l-14-16-10 20" /></motion.svg>
               <span>Da materia<br />a <strong>materia.</strong></span>

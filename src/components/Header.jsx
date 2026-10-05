@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import { useEffect, useRef, useState } from 'react'
 
 const NAV_LINKS = [
@@ -58,7 +59,7 @@ export default function Header() {
         <a href="#hero" className="brand" aria-label="Eco Asfalti SRL — home">
           <img
             className="brand-logo"
-            src={`${import.meta.env.BASE_URL}images/eco-asfalti-logo.png`}
+            {...responsiveImage("eco-asfalti-logo.png", "80px")}
             width="668"
             height="589"
             alt=""

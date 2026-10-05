@@ -495,10 +495,13 @@ h1, h2, h3, h4 { font-family: "Inter", system-ui, sans-serif; font-weight: 800; 
 /* =========================================================
    CONTATTI
    ========================================================= */
-.contatti-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
+.contatti-heading { margin-bottom: 2rem; }
+.contatti-heading .section-title { font-size: clamp(2.6rem, 4.8vw, 4.2rem); }
+.contatti-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 5rem); align-items: stretch; }
 .contatti-grid > *, .contatti-info, .contact-form { min-width: 0; }
 .contatti-info .section-title { font-size: clamp(2.6rem, 4.8vw, 4.2rem); }
-.contact-list { list-style: none; padding: 0; margin-top: 2rem; }
+.contact-list { list-style: none; padding: 0; margin: 0; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+.contact-list li:first-child { padding-top: 0; }
 .contact-list li { padding: 1.1rem 0; border-bottom: 1px solid var(--border); }
 .contact-label { display: block; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.25rem; }
 .contact-value { color: var(--text); font-size: 1.12rem; font-weight: 500; }
@@ -784,3 +787,16 @@ a.contact-value:hover { color: var(--orange); }
 
 .faq-q { list-style: none; }
 .faq-q::-webkit-details-marker { display: none; }
+
+:root[data-theme="light"] .manifesto-text em { color: #247318; }
+:root[data-theme="light"] { --text-dim: #52666c; }
+:root[data-theme="light"] .eyebrow,
+:root[data-theme="light"] .contact-label,
+:root[data-theme="light"] .h-card-index,
+:root[data-theme="light"] .technical-request a { color: #286b18; }
+:root[data-theme="light"] .hero-cinema .hero-eyebrow { color: #d6d8d4; }
+@media (min-width: 901px) {
+  .contatti-grid .contact-form { display: flex; flex-direction: column; }
+  .contatti-grid .contact-form > .field:has(textarea) { flex: 1; display: flex; flex-direction: column; }
+  .contatti-grid .contact-form textarea { flex: 1; min-height: 130px; }
+}

@@ -57,10 +57,12 @@ export default function Contatti() {
 
   return (
     <section className="section" id="contatti">
+      <div className="container contatti-heading">
+        <span className="eyebrow">Contatti</span>
+        <h2 className="section-title">Parliamone</h2>
+      </div>
       <div className="container contatti-grid">
         <Reveal className="contatti-info">
-          <span className="eyebrow">Contatti</span>
-          <h2 className="section-title">Parliamone</h2>
           <ul className="contact-list">
             <li>
               <span className="contact-label">Sede legale &amp; operativa</span>
@@ -68,6 +70,8 @@ export default function Contatti() {
               <a className="directions-link" href={directionsUrl} target="_blank" rel="noreferrer">Ottieni indicazioni stradali <span aria-hidden="true">↗</span></a>
             </li>
             <li><span className="contact-label">Email</span><a className="contact-value" href="mailto:info@ecoasfaltisrl.it">info@ecoasfaltisrl.it</a></li>
+            <li><span className="contact-label">Ufficio</span><a className="contact-value" href="tel:+390819205409">081 920 5409</a></li>
+            <li><span className="contact-label">Giuseppe Mele · Direttore dell’ufficio acquisti</span><a className="contact-value" href="tel:+393486410150">348 641 0150</a></li>
             <li><span className="contact-label">C.F. / P. IVA</span><span className="contact-value">06052780654</span></li>
             <li><span className="contact-label">Registro Imprese</span><span className="contact-value">REA SA-493642</span></li>
           </ul>

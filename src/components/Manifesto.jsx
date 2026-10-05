@@ -5,7 +5,7 @@ const TEXT = "Produciamo conglomerati bituminosi. Diamo nuova vita alla materia,
 const WORDS = TEXT.split(' ')
 
 function Word({ children, range, progress }) {
-  const opacity = useTransform(progress, range, [0.15, 1])
+  const opacity = useTransform(progress, range, [0.8, 1])
   return <motion.span style={{ opacity }}>{children}{' '}</motion.span>
 }
 

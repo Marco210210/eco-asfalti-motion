@@ -20,6 +20,12 @@ if (!preview) {
 }
 for (const file of (await readdir('dist')).filter(name => name.endsWith('.html'))) {
   let html = await readFile(`dist/${file}`, 'utf8')
+  // Small local styles inline remove two blocking requests from the first render.
+  for (const path of ['fonts/fonts.css', 'privacy-consent.css']) {
+    let css = await readFile(`dist/${path}`, 'utf8')
+    if (path.startsWith('fonts/')) css = css.replace(/url\((['"]?)\.\/([^)'"\s]+)\1\)/g, 'url("./fonts/$2")')
+    html = html.replace(`<link rel="stylesheet" href="./${path}" />`, `<style>${css}</style>`)
+  }
   html = html.replace(/<meta name="eco-analytics-id" content="[^"]*"\s*\/>/, `<meta name="eco-analytics-id" content="${preview ? '' : analytics}" />`)
   if (preview) html = html.replace(/<meta name="robots" content="[^"]*"\s*\/>/, '<meta name="robots" content="noindex, nofollow" />')
   await writeFile(`dist/${file}`, html)

@@ -1,3 +1,4 @@
+import { responsiveImage } from '../responsiveImage.js'
 import { motion, useReducedMotion } from 'framer-motion'
 
 const FOOTER_LINKS = [
@@ -32,7 +33,7 @@ export default function Footer() {
           <a href="#hero" className="footer-logo-link" aria-label="Eco Asfalti SRL — torna all'inizio">
             <img
               className="footer-logo"
-              src={`${import.meta.env.BASE_URL}images/eco-asfalti-logo.png`}
+              {...responsiveImage("eco-asfalti-logo.png", "140px")}
               width="668"
               height="589"
               alt=""
