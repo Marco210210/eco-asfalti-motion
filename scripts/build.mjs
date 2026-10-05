@@ -20,6 +20,12 @@ if (!preview) {
 }
 for (const file of (await readdir('dist')).filter(name => name.endsWith('.html'))) {
   let html = await readFile(`dist/${file}`, 'utf8')
+  // The single-page entry needs all of this stylesheet immediately. Inlining
+  // removes its blocking round trip on slow mobile connections.
+  for (const match of [...html.matchAll(/<link rel="stylesheet" crossorigin href="\.\/(assets\/[^"<>]+\.css)">/g)]) {
+    const css = await readFile(`dist/${match[1]}`, 'utf8')
+    html = html.replace(match[0], `<style>${css.replaceAll('</style', '<\\/style')}</style>`)
+  }
   // Small local styles inline remove two blocking requests from the first render.
   for (const path of ['fonts/fonts.css', 'privacy-consent.css']) {
     let css = await readFile(`dist/${path}`, 'utf8')
