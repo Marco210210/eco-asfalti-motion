@@ -6,6 +6,9 @@ AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript appl
 # Canonical domain; HTTPS may be terminated at Aruba's reverse proxy.
 <IfModule mod_rewrite.c>
 RewriteEngine On
+# Preserve known URLs from the previous website.
+RewriteRule ^contatti/?$ https://www.ecoasfaltisrl.it/#contatti [R=301,L,NE]
+RewriteRule ^images/certificazioni/MOG-231-EcoAsfalti\.pdf$ https://www.ecoasfaltisrl.it/certificazioni/modello-231.pdf [R=301,L,NE]
 RewriteCond %{HTTP_HOST} ^ecoasfaltisrl\.it$ [NC]
 RewriteRule ^ https://www.ecoasfaltisrl.it%{REQUEST_URI} [R=301,L,NE]
 RewriteCond %{HTTP_HOST} ^www\.ecoasfaltisrl\.it$ [NC]
